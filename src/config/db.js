@@ -6,15 +6,15 @@ const pool=new Pool({
     database:'sportconnect',
     port:5432
 })
-class Singlton{
+class Singleton{
     
      constructor(pool){
-        if(Singlton.instance){
-            return Singlton.instance
+        if(Singleton.instance){
+            return Singleton.instance
         }
         this.pool=pool
-           Singlton.instance=this
+           Singleton.instance=this
      }
 }
 
-module.exports=new Singlton(pool);
+module.exports=new Singleton(pool);
