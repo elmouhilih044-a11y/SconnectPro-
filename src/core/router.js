@@ -33,5 +33,6 @@ router.on('POST', '/registrations', (req, res) => {
   res.writeHead(201, { 
     'Content-Type': 'text/plain'
  });
-  res.end('Inscription créée');
+  res.end('Inscription crée');
 });
+module.exports=router
