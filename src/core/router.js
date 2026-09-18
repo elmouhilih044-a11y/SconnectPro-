@@ -33,6 +33,8 @@ router.on('POST', '/registrations', (req, res) => {
   res.writeHead(201, { 
     'Content-Type': 'text/plain'
  });
+ router.on('POST', '/facilities', facilityController.createFacility);
   res.end('Inscription crée');
 });
 module.exports=router
+//
