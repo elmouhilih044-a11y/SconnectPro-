@@ -34,6 +34,7 @@ router.on('POST', '/registrations', (req, res) => {
     'Content-Type': 'text/plain'
  });
  router.on('POST', '/facilities', facilityController.createFacility);
+ router.on('PUT', '/facilities/:id', updateFacility.createFacility);
   res.end('Inscription crée');
 });
 module.exports=router

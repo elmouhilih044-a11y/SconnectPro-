@@ -49,8 +49,43 @@ async function createFacility(req, res) {
     });
 }
 
+async function updateFacility(req, res) {
+    let body = '';
+
+    req.on('data', (chunk) => {
+        body += chunk;
+    });
+
+    req.on('end', async () => {
+        try {
+            const data = JSON.parse(body);
+
+            const facility = await facilityService.updateFacility(
+                req.params.id,
+                data
+            );
+
+            res.writeHead(200, {
+                'Content-Type': 'application/json'
+            });
+
+            res.end(JSON.stringify(facility));
+
+        } catch (error) {
+            console.error(error);
+
+            res.writeHead(500, {
+                'Content-Type': 'text/plain'
+            });
+
+            res.end('Erreur serveur');
+        }
+    });
+}
+
 module.exports = {
     getAllFacilities,
     getFacilityById,
-    createFacility
+    createFacility,
+    updateFacility
 };
