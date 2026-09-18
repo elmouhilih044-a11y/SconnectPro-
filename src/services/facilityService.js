@@ -24,13 +24,7 @@ async function createFacility(data) {
 }
 async function updateFacility(id, data) {
     const result = await db.pool.query(
-        `UPDATE facilities
-         SET name = $1,
-             type = $2,
-             erp_capacity = $3,
-             is_divisible = $4
-         WHERE id = $5
-         RETURNING *`,
+        `UPDATE facilities SET name = $1, type = $2, erp_capacity = $3, is_divisible = $4 WHERE id = $5 RETURNING *`,
         [
             data.name,
             data.type,
@@ -38,6 +32,16 @@ async function updateFacility(id, data) {
             data.is_divisible,
             id
         ]
+    );
+
+    return result.rows[0];
+}
+async function deleteFacility(id) {
+    const result = await db.pool.query(
+        `DELETE FROM facilities
+         WHERE id = $1
+         RETURNING *`,
+        [id]
     );
 
     return result.rows[0];
@@ -50,5 +54,6 @@ module.exports = {
     getAllFacilities,
     getFacilityById,
     createFacility,
-    updateFacility
+    updateFacility,
+    deleteFacility
 };
