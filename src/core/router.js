@@ -1,6 +1,7 @@
 const findMyWay = require('find-my-way');
 const facilityController = require('../controllers/facilityController')
 const associationController=require('../controllers/associationController')
+const activityController=require('../controllers/activityController')
 const router = findMyWay({
     defaultRoute: (req, res) => {
         res.writeHead(404, {
@@ -15,26 +16,8 @@ router.on('GET', '/', (req, res) => {
     });
     res.end('<h1>Accueil</h1>')
 });
-router.on('GET', '/activities', (req, res) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/plain'
-    });
-    res.end('Liste des activités')
-});
 
-router.on('GET', '/activities/:id', (req, res) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/plain'
-    });
-    res.end(`Détail de l'activité ${req.params.id}`);
-});
-router.on('POST', '/registrations', (req, res) => {
-    res.writeHead(201, {
-        'Content-Type': 'text/plain'
-    });
 
-    res.end('Inscription créée')
-});
 router.on('GET', '/facilities', facilityController.getFacilities)
 router.on('GET', '/facilities/:id', facilityController.getFacility)
 router.on('POST', '/facilities', facilityController.addFacility)
@@ -46,4 +29,12 @@ router.on('GET', '/getAssociations/:id', associationController.getAssociation)
 router.on('POST', '/associations', associationController.addAssociation)
 router.on('PUT', '/associations/:id', associationController.editAssociation)
 router.on('DELETE', '/associations/:id', associationController.removeAssociation)
+
+router.on('GET', '/activities', activityController.getActivities)
+router.on('GET', '/activities/:id', activityController.getActivity)
+router.on('POST', '/activities', activityController.addActivity)
+router.on('PUT', '/activities/:id', activityController.editActivity)
+router.on('DELETE', '/activities/:id', activityController.removeActivity)
+
+
 module.exports = router;
