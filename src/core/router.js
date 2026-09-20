@@ -3,6 +3,8 @@ const facilityController = require('../controllers/facilityController')
 const associationController=require('../controllers/associationController')
 const activityController=require('../controllers/activityController')
 const registrationController=require('../controllers/registrationController')
+
+const waintingListController=require('../controllers/waitingListController');
 const router = findMyWay({
     defaultRoute: (req, res) => {
         res.writeHead(404, {
@@ -47,5 +49,11 @@ router.on('GET', '/registrations', registrationController.getRegistrations)
 router.on('GET', '/registrations/:id', registrationController.getRegistration)
 router.on('POST', '/registrations', registrationController.addRegistration)
 router.on('DELETE', '/registrations/:id', registrationController.removeRegistration)
-    
+
+router.on('GET', '/waiting-list', waintingListController.getWaitingList)
+router.on('GET', '/waiting-list/:id', waintingListController.getWaitingList)
+router.on('POST', '/waiting-list', waintingListController.addWaiting)
+router.on('PUT', '/waiting-list/:id', waintingListController.editWaiting)
+router.on('DELETE', '/waiting-list/:id', waintingListController.removeWaiting)
+
 module.exports = router;
