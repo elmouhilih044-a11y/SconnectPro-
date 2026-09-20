@@ -2,6 +2,7 @@ const findMyWay = require('find-my-way');
 const facilityController = require('../controllers/facilityController')
 const associationController=require('../controllers/associationController')
 const activityController=require('../controllers/activityController')
+const registrationController=require('../controllers/registrationController')
 const router = findMyWay({
     defaultRoute: (req, res) => {
         res.writeHead(404, {
@@ -36,5 +37,15 @@ router.on('POST', '/activities', activityController.addActivity)
 router.on('PUT', '/activities/:id', activityController.editActivity)
 router.on('DELETE', '/activities/:id', activityController.removeActivity)
 
+router.on('GET', '/activities', activityController.getActivities)
+router.on('GET', '/activities/:id', activityController.getActivity)
+router.on('POST', '/activities', activityController.addActivity)
+router.on('PUT', '/activities/:id', activityController.editActivity)
+router.on('DELETE', '/activities/:id', activityController.removeActivity)
 
+router.on('GET', '/registrations', registrationController.getRegistrations)
+router.on('GET', '/registrations/:id', registrationController.getRegistration)
+router.on('POST', '/registrations', registrationController.addRegistration)
+router.on('DELETE', '/registrations/:id', registrationController.removeRegistration)
+    
 module.exports = router;

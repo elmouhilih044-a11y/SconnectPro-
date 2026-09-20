@@ -1,21 +1,20 @@
-const db = require('../config/db');
+const db= require('../config/db');
 
 async function getActivities(){
-    const result = await db.pool.query(
+    const result= await db.pool.query(
         'SELECT * FROM activities ORDER BY id'
     )
     return result.rows
 }
 async function getActivity(id){
-    const result = await db.pool.query(
+    const result= await db.pool.query(
         'SELECT * FROM activities WHERE id = $1',[id]
     )
     return result.rows[0]
 }
 async function addActivity(activity){
-    const result = await db.pool.query(
-        `INSERT INTO activities
-        (
+    const result= await db.pool.query(
+        `INSERT INTO activities(
          facility_id,
          association_id,
          base_price,
@@ -45,20 +44,20 @@ async function addActivity(activity){
     )
     return result.rows[0]
 }
-async function editActivity(id, activity) {
-    const result = await db.pool.query(
-        `UPDATE activities SET facility_id = $1,
-             association_id = $2,
-             base_price = $3,
-             max_capacity = $4,
-             day_of_week = $5,
-             start_time = $6,
-             end_time = $7,
-             sub_zone = $8,
-             age_category = $9,
-             is_all_public = $10,
-             status = $11
-         WHERE id = $12 RETURNING *`,
+async function editActivity(id, activity){
+    const result= await db.pool.query(
+        `UPDATE activities SET facility_id= $1,
+             association_id= $2,
+             base_price= $3,
+             max_capacity= $4,
+             day_of_week= $5,
+             start_time= $6,
+             end_time= $7,
+             sub_zone= $8,
+             age_category= $9,
+             is_all_public= $10,
+             status= $11
+         WHERE id= $12 RETURNING *`,
         [
          activity.facility_id,
          activity.association_id,
@@ -76,14 +75,14 @@ async function editActivity(id, activity) {
     );
     return result.rows[0]
 }
-async function removeActivity(id) {
-    const result = await db.pool.query(
+async function removeActivity(id){
+    const result= await db.pool.query(
         `DELETE FROM activities
-         WHERE id = $1 RETURNING *`,[id]
+         WHERE id= $1 RETURNING *`,[id]
     );
     return result.rows[0]
 }
-module.exports = {
+module.exports={
     getActivities,
     getActivity,
     addActivity,

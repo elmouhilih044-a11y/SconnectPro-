@@ -1,21 +1,21 @@
-const activityRepository = require('../repositories/activityRepository');
+const activityRepository= require('../repositories/activityRepository');
 
-async function getActivities() {
+async function getActivities(){
     return activityRepository.getActivities()
 }
-async function getActivity(id) {
+async function getActivity(id){
     return activityRepository.getActivity(id)
 }
-async function addActivity(activity) {
+async function addActivity(activity){
     return activityRepository.addActivity(activity)
 }
-async function editActivity(id, activity) {
+async function editActivity(id, activity){
     return activityRepository.editActivity(id, activity)
 }
-async function removeActivity(id) {
+async function removeActivity(id){
     return activityRepository.removeActivity(id)
 }
-module.exports = {
+module.exports={
     getActivities,
     getActivity,
     addActivity,

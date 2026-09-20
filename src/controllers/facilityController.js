@@ -1,44 +1,44 @@
 const facilityService = require('../services/facilityService');
 
-async function getFacilities(req, res) {
+async function getFacilities(req, res){
     try {
-        const facilities = await facilityService.getFacilities();
-        res.writeHead(200, {
+        const facilities= await facilityService.getFacilities();
+        res.writeHead(200,{
             'Content-Type':'application/json'
         })
         res.end(JSON.stringify(facilities))
-    } catch (error) {
+    } catch (error){
         console.error(error);
-        res.writeHead(500, {
+        res.writeHead(500,{
             'Content-Type': 'text/plain'
         })
         res.end('Erreur serveur');
     }
 }
-async function getFacility(req, res) {
+async function getFacility(req, res){
     try {
-        const facility = await facilityService.getFacility(req.params.id);
-        if (!facility) {
-            res.writeHead(404, {
+        const facility= await facilityService.getFacility(req.params.id);
+        if (!facility){
+            res.writeHead(404,{
                 'Content-Type': 'text/plain'
             })
             return res.end('Facility introuvable');
         }
-        res.writeHead(200, {
+        res.writeHead(200,{
             'Content-Type': 'application/json'
         })
         res.end(JSON.stringify(facility));
     } catch (error) {
         console.error(error)
-        res.writeHead(500, {
+        res.writeHead(500,{
             'Content-Type': 'text/plain'
         });
         res.end('Erreur serveur');
     }
 }
 
-async function addFacility(req,res) {
-    let body = ''
+async function addFacility(req,res){
+    let body= ''
     req.on('data',(part) => {
         body += part
     });
@@ -47,42 +47,41 @@ async function addFacility(req,res) {
             const facilityData = JSON.parse(body)
             const facility = await facilityService.addFacility(facilityData)
             res.writeHead(201, {
-                'Content-Type': 'application/json'
+                'Content-Type':'application/json'
             })
             res.end(JSON.stringify(facility))
         } catch (error) {
             console.error(error)
             res.writeHead(500, {
-                'Content-Type': 'text/plain'
+                'Content-Type':'text/plain'
             })
             res.end('Erreur serveur');
         }
     });
 }
-
-async function editFacility(req, res) {
+async function editFacility(req, res){
     let body = '';
-    req.on('data',(part) => {
+    req.on('data',(part)=> {
         body += part
     });
-    req.on('end', async () => {
+    req.on('end', async ()=> {
         try {
-            const facilityData = JSON.parse(body)
-            const facility = await facilityService.editFacility(
+            const facilityData= JSON.parse(body)
+            const facility= await facilityService.editFacility(
                 req.params.id,facilityData);
-            if (!facility) {
-                res.writeHead(404, {
-                    'Content-Type': 'text/plain'
+            if (!facility){
+                res.writeHead(404,{
+                    'Content-Type':'text/plain'
                 });
                 return res.end('Facility introuvable');
             }
-            res.writeHead(200, {
-                'Content-Type': 'application/json'
+            res.writeHead(200,{
+                'Content-Type':'application/json'
             });
             res.end(JSON.stringify(facility));
-        } catch (error) {
+        } catch (error){
             console.error(error)
-            res.writeHead(500, {
+            res.writeHead(500,{
                 'Content-Type': 'text/plain'
             })
             res.end('Erreur serveur')
@@ -90,29 +89,29 @@ async function editFacility(req, res) {
     });
 }
 
-async function removeFacility(req,res) {
+async function removeFacility(req,res){
     try {
-        const facility = await facilityService.removeFacility(req.params.id)
-        if (!facility) {
+        const facility= await facilityService.removeFacility(req.params.id)
+        if (!facility){
             res.writeHead(404,{
-                'Content-Type': 'text/plain'
+                'Content-Type':'text/plain'
             })
             return res.end('Facility introuvable');
         }
-        res.writeHead(200, {
-            'Content-Type': 'application/json'
+        res.writeHead(200,{
+            'Content-Type':'application/json'
         });
         res.end(JSON.stringify(facility))
-    } catch (error) {
+    } catch (error){
         console.error(error)
-        res.writeHead(500, {
-            'Content-Type': 'text/plain'
+        res.writeHead(500,{
+            'Content-Type':'text/plain'
         });
         res.end('Erreur serveur');
     }
 }
 
-module.exports = {
+module.exports= {
     getFacilities,
     getFacility,
     addFacility,

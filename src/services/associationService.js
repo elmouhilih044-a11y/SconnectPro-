@@ -1,21 +1,21 @@
-const associationRepository = require('../repositories/associationRepository');
+const associationRepository= require('../repositories/associationRepository');
 
-async function getAssociations() {
+async function getAssociations(){
     return associationRepository.getAssociations()
 }
-async function getAssociation(id) {
+async function getAssociation(id){
     return associationRepository.getAssociation(id)
 }
-async function addAssociation(association) {
+async function addAssociation(association){
     return associationRepository.addAssociation(association)
 }
-async function editAssociation(id, association) {
+async function editAssociation(id, association){
     return associationRepository.editAssociation(id,association)
 }
-async function removeAssociation(id) {
+async function removeAssociation(id){
     return associationRepository.removeAssociation(id)
 }
-module.exports = {
+module.exports={
     getAssociations,
     getAssociation,
     addAssociation,
