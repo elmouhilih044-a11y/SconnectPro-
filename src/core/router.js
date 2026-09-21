@@ -3,9 +3,11 @@ const facilityController = require('../controllers/facilityController')
 const associationController=require('../controllers/associationController')
 const activityController=require('../controllers/activityController')
 const registrationController=require('../controllers/registrationController')
-const memberController=require('../controllers/memberController')
-
 const waintingListController=require('../controllers/waitingListController');
+const memberController=require('../controllers/memberController')
+const familyController=require('../controllers/familyController')
+
+
 const router = findMyWay({
     defaultRoute: (req, res) => {
         res.writeHead(404, {
@@ -52,7 +54,7 @@ router.on('POST', '/registrations', registrationController.addRegistration)
 router.on('DELETE', '/registrations/:id', registrationController.removeRegistration)
 
 router.on('GET', '/waiting-list', waintingListController.getWaitingList)
-router.on('GET', '/waiting-list/:id', waintingListController.getWaitingList)
+router.on('GET', '/waiting-list/:id', waintingListController.getWaiting)
 router.on('POST', '/waiting-list', waintingListController.addWaiting)
 router.on('PUT', '/waiting-list/:id', waintingListController.editWaiting)
 router.on('DELETE', '/waiting-list/:id', waintingListController.removeWaiting)
@@ -62,5 +64,11 @@ router.on('GET', '/members/:id', memberController.getMember)
 router.on('POST', '/members', memberController.addMember)
 router.on('PUT', '/members/:id', memberController.editMember)
 router.on('DELETE', '/members/:id', memberController.removeMember)
+
+router.on('GET', '/families', familyController.getFamilies)
+router.on('GET', '/families/:id', familyController.getFamily)
+router.on('POST', '/families', familyController.addFamily)
+router.on('PUT', '/families/:id', familyController.editFamily)
+router.on('DELETE', '/families/:id', familyController.removeFamily)
 
 module.exports = router;
