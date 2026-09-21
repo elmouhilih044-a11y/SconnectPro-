@@ -3,6 +3,7 @@ const facilityController = require('../controllers/facilityController')
 const associationController=require('../controllers/associationController')
 const activityController=require('../controllers/activityController')
 const registrationController=require('../controllers/registrationController')
+const memberController=require('../controllers/memberController')
 
 const waintingListController=require('../controllers/waitingListController');
 const router = findMyWay({
@@ -28,7 +29,7 @@ router.on('PUT', '/facilities/:id', facilityController.editFacility)
 router.on('DELETE', '/facilities/:id', facilityController.removeFacility)
 
 router.on('GET', '/associations', associationController.getAssociations)
-router.on('GET', '/getAssociations/:id', associationController.getAssociation)
+router.on('GET', '/associations/:id', associationController.getAssociation)
 router.on('POST', '/associations', associationController.addAssociation)
 router.on('PUT', '/associations/:id', associationController.editAssociation)
 router.on('DELETE', '/associations/:id', associationController.removeAssociation)
@@ -55,5 +56,11 @@ router.on('GET', '/waiting-list/:id', waintingListController.getWaitingList)
 router.on('POST', '/waiting-list', waintingListController.addWaiting)
 router.on('PUT', '/waiting-list/:id', waintingListController.editWaiting)
 router.on('DELETE', '/waiting-list/:id', waintingListController.removeWaiting)
+
+router.on('GET', '/members', memberController.getMembers)
+router.on('GET', '/members/:id', memberController.getMember)
+router.on('POST', '/members', memberController.addMember)
+router.on('PUT', '/members/:id', memberController.editMember)
+router.on('DELETE', '/members/:id', memberController.removeMember)
 
 module.exports = router;
