@@ -13,36 +13,22 @@ async function getActivity(id){
     return result.rows[0]
 }
 async function addActivity(activity){
-    const result= await db.pool.query(
+    const result = await db.pool.query(
         `INSERT INTO activities(
-         facility_id,
-         association_id,
-         base_price,
-         max_capacity,
-         day_of_week,
-         start_time,
-         end_time,
-         sub_zone,
-         age_category,
-         is_all_public,
-         status
+         facility_id, association_id, name, sport_type, base_price,
+         max_capacity, day_of_week, start_time, end_time,
+         sub_zone, age_category, is_all_public, status
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)RETURNING *`,
-         [
-          activity.facility_id,
-          activity.association_id,
-          activity.base_price,
-          activity.max_capacity,
-          activity.day_of_week,
-          activity.start_time,
-          activity.end_time,
-          activity.sub_zone,
-          activity.age_category,
-          activity.is_all_public,
-          activity.status
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
+        [
+         activity.facility_id, activity.association_id, activity.name,
+         activity.sport_type, activity.base_price, activity.max_capacity,
+         activity.day_of_week, activity.start_time, activity.end_time,
+         activity.sub_zone, activity.age_category, activity.is_all_public,
+         activity.status
         ]
-    )
-    return result.rows[0]
+    );
+    return result.rows[0];
 }
 async function editActivity(id, activity){
     const result= await db.pool.query(

@@ -33,7 +33,7 @@ async function getWaiting(req, res){
         res.writeHead(500,{
             'Content-Type':'text/plain'
         });
-        res.end('Erreur serveur');$
+        res.end('Erreur serveur');
     }
 }
 

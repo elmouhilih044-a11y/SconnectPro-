@@ -4,7 +4,7 @@ async function getRegistrations(req, res){
     try {
         const registrations= await registrationService.getRegistrations()
         res.writeHead(200,{
-            'Content-Type': 'application/json'
+            'Content-Type':'application/json'
         });
         res.end(JSON.stringify(registrations));
     } catch (error){
@@ -20,18 +20,18 @@ async function getRegistration(req, res){
         const registration= await registrationService.getRegistration(req.params.id);
         if (!registration) {
             res.writeHead(404, {
-                'Content-Type': 'text/plain'
+                'Content-Type':'text/plain'
             });
             return res.end('Inscription introuvable')
         }
         res.writeHead(200,{
-            'Content-Type': 'application/json'
-        });
+            'Content-Type':'application/json'
+        })
         res.end(JSON.stringify(registration));
     } catch (error){
         console.error(error)
         res.writeHead(500,{
-            'Content-Type': 'text/plain'
+            'Content-Type':'text/plain'
         });
         res.end('Erreur serveur')
     }
@@ -43,16 +43,23 @@ async function addRegistration(req, res){
     });
     req.on('end',async()=> {
         try {
-            const registrationData= JSON.parse(body);
-            const registration=
-                await registrationService.addRegistration(
-                    registrationData
+        const registrationData = JSON.parse(body);
+
+            const result=await registrationService.addRegistration(
+                    registrationData,
+                    registrationData.final_price,
+                    registrationData.priority_score
                 );
-            res.writeHead(201, {
-                'Content-Type': 'application/json'
+
+            const statusCode =result.status === 'confirmed' ? 201 : 200;
+
+            res.writeHead(statusCode, {
+                'Content-Type':'application/json'
             });
-            res.end(JSON.stringify(registration));
-        } catch (error) {
+
+            res.end(JSON.stringify(result));
+
+        }catch (error){
             console.error(error)
             res.writeHead(500, {
                 'Content-Type': 'text/plain'
