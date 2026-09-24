@@ -15,10 +15,30 @@ async function editWaiting(id, data){
 async function removeWaiting(id){
     return waitingListRepository.removeWaiting(id);
 }
+async function getNextCandidate(activityId) {
+    const candidates=await waitingListRepository.getWaitingByActivity(activityId);
+    return candidates[0] || null;
+}
+async function promoteNextCandidate(activityId) {
+    const candidate = await getNextCandidate(activityId)
+    if (!candidate) {
+        return null;
+    }
+    const deadline= new Date();
+    deadline.setHours(deadline.getHours()+48)
+    return waitingListRepository.updateWaitingStatus(candidate.id,'promoted_pending',deadline)
+}
+async function expirePromotions() {
+    return waitingListRepository.expirePromotions();
+}
+
 module.exports= {
     getWaitingList,
     getWaiting,
     addWaiting,
     editWaiting,
-    removeWaiting
+    removeWaiting,
+    getNextCandidate,
+    promoteNextCandidate,
+    expirePromotions
 }
