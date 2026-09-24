@@ -52,10 +52,49 @@ async function removeWaiting(id) {
     );
     return result.rows[0];
 }
-module.exports = {
+
+async function getWaitingByActivity(activityId) {
+    const result = await db.pool.query(
+        `SELECT * FROM waiting_list
+         WHERE activity_id = $1
+         AND status = 'waiting'
+         ORDER BY priority_score DESC, created_at ASC`,
+        [activityId]
+    )
+    return result.rows
+}
+async function updateWaitingStatus(id, status, deadlineConfirmation= null) {
+    const result= await db.pool.query(
+        `UPDATE waiting_list
+         SET status = $1,
+             deadline_confirmation = $2
+         WHERE id = $3 RETURNING *`,
+        [status, deadlineConfirmation, id]
+    )
+    return result.rows[0];
+}
+async function expirePromotions(){
+    const result= await db.pool.query(
+        `UPDATE waiting_list
+         SET status= 'expired', deadline_confirmation = NULL
+         WHERE status= 'promoted_pending'
+         AND deadline_confirmation <= CURRENT_TIMESTAMP RETURNING *`
+    );
+
+    return result.rows;
+}
+
+
+
+module.exports={
     getWaitingList,
     getWaiting,
     addWaiting,
     editWaiting,
-    removeWaiting
+    removeWaiting,
+    getWaitingByActivity,
+    updateWaitingStatus,
+    expirePromotions
+
+
 }
