@@ -10,26 +10,30 @@ async function addWaiting(data){
 }
 
 async function editWaiting(id, data){
-    return waitingListRepository.editWaiting(id, data);
+    return waitingListRepository.editWaiting(id, data)
 }
 async function removeWaiting(id){
-    return waitingListRepository.removeWaiting(id);
+    return waitingListRepository.removeWaiting(id)
 }
-async function getNextCandidate(activityId) {
-    const candidates=await waitingListRepository.getWaitingByActivity(activityId);
+async function getNextCandidate(activityId){
+    const candidates=await waitingListRepository.getWaitingByActivity(activityId)
     return candidates[0] || null;
 }
-async function promoteNextCandidate(activityId) {
-    const candidate = await getNextCandidate(activityId)
+async function promoteNextCandidate(activityId){
+    const candidate= await getNextCandidate(activityId)
     if (!candidate) {
-        return null;
+        return null
     }
-    const deadline= new Date();
+    const deadline= new Date()
     deadline.setHours(deadline.getHours()+48)
     return waitingListRepository.updateWaitingStatus(candidate.id,'promoted_pending',deadline)
 }
-async function expirePromotions() {
-    return waitingListRepository.expirePromotions();
+async function expirePromotions(){
+    const expired= await waitingListRepository.expirePromotions()
+    for (const entry of expired){
+        await promoteNextCandidate(entry.activity_id)
+    }
+    return expired
 }
 
 module.exports= {

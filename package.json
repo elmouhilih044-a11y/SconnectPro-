@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/elmouhilih044-a11y/SconnectPro-#readme",
   "dependencies": {
+    "dotenv": "^18.0.3",
     "ejs": "^6.0.1",
     "find-my-way": "^9.9.0",
     "pg": "^8.23.0"

@@ -8,7 +8,7 @@ const memberController=require('../controllers/memberController')
 const familyController=require('../controllers/familyController')
 
 
-const router = findMyWay({
+const router= findMyWay({
     defaultRoute: (req, res) => {
         res.writeHead(404, {
             'Content-Type': 'text/html'
@@ -35,12 +35,6 @@ router.on('GET', '/associations/:id', associationController.getAssociation)
 router.on('POST', '/associations', associationController.addAssociation)
 router.on('PUT', '/associations/:id', associationController.editAssociation)
 router.on('DELETE', '/associations/:id', associationController.removeAssociation)
-
-router.on('GET', '/activities', activityController.getActivities)
-router.on('GET', '/activities/:id', activityController.getActivity)
-router.on('POST', '/activities', activityController.addActivity)
-router.on('PUT', '/activities/:id', activityController.editActivity)
-router.on('DELETE', '/activities/:id', activityController.removeActivity)
 
 router.on('GET', '/activities', activityController.getActivities)
 router.on('GET', '/activities/:id', activityController.getActivity)

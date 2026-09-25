@@ -42,19 +42,19 @@ async function addActivity(req, res){
         body += part
     });
     req.on('end', async()=> {
-        try {
+        try{
             const activityData = JSON.parse(body);
             const activity = await activityService.addActivity(activityData);
             res.writeHead(201,{
                 'Content-Type': 'application/json'
             })
             res.end(JSON.stringify(activity))
-        } catch(error){
+        } catch (error){
             console.error(error)
-            res.writeHead(500,{
-                'Content-Type':'text/plain'
-            });
-            res.end('Erreur serveur');
+            res.writeHead(400,{
+                'Content-Type': 'text/plain'
+            })
+            res.end(error.message)
         }
     });
 }
@@ -83,12 +83,12 @@ async function editActivity(req, res){
                 'Content-Type':'application/json'
             });
             res.end(JSON.stringify(activity))
-        } catch(error) {
+        }catch (error) {
             console.error(error)
-            res.writeHead(500, {
+            res.writeHead(400,{
                 'Content-Type':'text/plain'
-            });
-            res.end('Erreur serveur')
+            })
+            res.end(error.message);
         }
     });
 }

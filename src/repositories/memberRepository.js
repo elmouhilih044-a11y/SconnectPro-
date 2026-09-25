@@ -14,8 +14,8 @@ async function getMember(id){
 async function addMember(member){
     const result=await db.pool.query(
         `INSERT INTO members
-        (family_id,first_name,last_name,birth_date,is_resident,passport_code,medical_certificate_date)
-        VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+        (family_id,first_name,last_name,birth_date,is_resident,passport_code,pass_sport_code,medical_certificate_date)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
         [
             member.family_id,
             member.first_name,
@@ -23,6 +23,7 @@ async function addMember(member){
             member.birth_date,
             member.is_resident,
             member.passport_code,
+            member.pass_sport_code,
             member.medical_certificate_date
         ]
     )
@@ -35,9 +36,10 @@ async function editMember(id,member){
              last_name=$3,
              birth_date=$4,
              is_resident=$5,
-             passport_code=$6,
-             medical_certificate_date=$7
-         WHERE id=$8 RETURNING *`,
+             pass_sport_code=$6,
+             passport_code=$7,
+             medical_certificate_date=$8
+         WHERE id=$9 RETURNING *`,
         [
             member.family_id,
             member.first_name,
@@ -45,6 +47,7 @@ async function editMember(id,member){
             member.birth_date,
             member.is_resident,
             member.passport_code,
+            member.pass_sport_code,
             member.medical_certificate_date,
             id
         ]

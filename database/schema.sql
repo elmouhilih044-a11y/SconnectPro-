@@ -27,7 +27,7 @@ CREATE TABLE activities(
     day_of_week INTEGER NOT NULL CHECK (day_of_week BETWEEN 1 AND 7),
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
-    sub_zone VARCHAR(200) NOT NULL,
+    sub_zone VARCHAR(200),
     age_category VARCHAR(50) NOT NULL,
     is_all_public BOOLEAN NOT NULL,
     status VARCHAR(50) NOT NULL,
@@ -49,6 +49,7 @@ CREATE TABLE members(
     birth_date DATE NOT NULL,
     is_resident BOOLEAN NOT NULL,
     passport_code VARCHAR(200),
+     pass_sport_code VARCHAR(100),
     medical_certificate_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

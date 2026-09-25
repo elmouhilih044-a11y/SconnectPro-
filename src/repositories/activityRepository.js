@@ -68,10 +68,31 @@ async function removeActivity(id){
     );
     return result.rows[0]
 }
+async function getActivitiesBySchedule(facilityId, dayOfWeek, excludeId= null){
+    const result= await db.pool.query(
+        `SELECT * FROM activities
+         WHERE facility_id = $1 AND day_of_week = $2 AND ($3::integer IS NULL OR id <> $3)
+         ORDER BY start_time`,
+        [facilityId, dayOfWeek, excludeId]
+    )
+    return result.rows
+}
+
+async function getFacility(facilityId){
+    const result= await db.pool.query(
+        `SELECT id, erp_capacity, is_divisible FROM facilities WHERE id= $1`,
+        [facilityId]
+    )
+    return result.rows[0];
+}
+
 module.exports={
     getActivities,
     getActivity,
     addActivity,
     editActivity,
-    removeActivity
+    removeActivity,
+    getActivitiesBySchedule,
+    getFacility
+
 }

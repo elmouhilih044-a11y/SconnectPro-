@@ -45,11 +45,7 @@ async function addRegistration(req, res){
         try {
         const registrationData = JSON.parse(body);
 
-            const result=await registrationService.addRegistration(
-                    registrationData,
-                    registrationData.final_price,
-                    registrationData.priority_score
-                );
+          const result = await registrationService.addRegistration(registrationData)
 
             const statusCode =result.status === 'confirmed' ? 201 : 200;
 
@@ -59,13 +55,13 @@ async function addRegistration(req, res){
 
             res.end(JSON.stringify(result));
 
-        }catch (error){
-            console.error(error)
-            res.writeHead(500, {
-                'Content-Type': 'text/plain'
-            });
-            res.end('Erreur serveur')
-        }
+        }catch (error) {
+    console.error(error);
+    res.writeHead(400, {
+        'Content-Type': 'text/plain'
+    });
+    res.end(error.message);
+}
     });
 }
 async function removeRegistration(req, res){
