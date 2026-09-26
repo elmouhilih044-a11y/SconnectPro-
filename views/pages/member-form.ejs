@@ -1,0 +1,166 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="page-container">
+
+    <section class="page-header">
+
+        <div>
+            <span class="eyebrow">Adhérent</span>
+
+            <h1>
+                <%= member ? 'Modifier l adhérent' : 'Nouvel adhérent' %>
+            </h1>
+
+            <p>Informations personnelles et administratives</p>
+        </div>
+
+    </section>
+
+    <section class="form-card">
+
+        <form
+            method="POST"
+            action="<%= member ? '/members/' + member.id : '/members' %>"
+        >
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="first_name">Prénom</label>
+
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        required
+                        value="<%= member ? member.first_name : '' %>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Nom</label>
+
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        required
+                        value="<%= member ? member.last_name : '' %>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="<%= member ? member.email || '' : '' %>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="birth_date">Date de naissance</label>
+
+                    <input
+                        type="date"
+                        id="birth_date"
+                        name="birth_date"
+                        required
+                        value="<%= member ? member.birth_date : '' %>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="family_id">Famille</label>
+
+                    <select id="family_id" name="family_id">
+
+                        <option value="">Aucune famille</option>
+
+                        <% if (families) { %>
+
+                            <% families.forEach(function(family) { %>
+
+                                <option
+                                    value="<%= family.id %>"
+                                    <%= member && member.family_id == family.id ? 'selected' : '' %>
+                                >
+                                    <%= family.name || 'Famille ' + family.id %>
+                                </option>
+
+                            <% }) %>
+
+                        <% } %>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="quotient_familial">
+                        Quotient familial
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quotient_familial"
+                        name="quotient_familial"
+                        min="0"
+                        step="0.01"
+                        value="<%= member ? member.quotient_familial || '' : '' %>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="medical_certificate_date">
+                        Certificat médical
+                    </label>
+
+                    <input
+                        type="date"
+                        id="medical_certificate_date"
+                        name="medical_certificate_date"
+                        value="<%= member ? member.medical_certificate_date || '' : '' %>"
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-checkboxes">
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="is_resident"
+                        value="true"
+                        <%= member && member.is_resident ? 'checked' : '' %>
+                    >
+                    Résident de la commune
+                </label>
+
+            </div>
+
+            <div class="form-actions">
+
+                <a href="/members" class="btn btn-secondary">
+                    Annuler
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    <%= member ? 'Enregistrer' : 'Créer l adhérent' %>
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+<script src="/public/js/client-validation.js"></script>
+
+<%- include('../partials/footer') %>
