@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main class="page-container">
+    <section class="empty-state">
+        <div class="empty-state-content">
+            <span class="empty-code"><%= statusCode || 404 %></span>
+
+            <h1>
+                <%= statusCode === 500 ? 'Une erreur est survenue' : 'Page non trouvée' %>
+            </h1>
+
+            <p>
+                <%= message || 'La page que vous recherchez n existe pas.' %>
+            </p>
+
+            <a href="/" class="btn btn-primary">
+                Retour à l accueil
+            </a>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
