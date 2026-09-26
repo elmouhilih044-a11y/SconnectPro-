@@ -1,0 +1,120 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="page-container">
+
+    <section class="page-header">
+
+        <div>
+            <span class="eyebrow">Suivi</span>
+            <h1>Inscriptions</h1>
+            <p>Suivi des inscriptions et des statuts</p>
+        </div>
+
+        <a href="/registrations/new" class="btn btn-primary">
+            Nouvelle inscription
+        </a>
+
+    </section>
+
+    <% if (registrations && registrations.length > 0) { %>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Adhérent</th>
+                        <th>Activité</th>
+                        <th>Prix</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <% registrations.forEach(function(registration) { %>
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    <%= registration.first_name || '' %>
+                                    <%= registration.last_name || '' %>
+                                </strong>
+                            </td>
+
+                            <td>
+                                <%= registration.activity_name || '-' %>
+                            </td>
+
+                            <td>
+                                <%= registration.final_price || 0 %> MAD
+                            </td>
+
+                            <td>
+
+                                <% if (registration.status === 'confirmed') { %>
+
+                                    <span class="status-badge">
+                                        Confirmée
+                                    </span>
+
+                                <% } else if (registration.status === 'waitlisted') { %>
+
+                                    <span class="status-badge status-warning">
+                                        Liste d attente
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span class="status-badge status-muted">
+                                        <%= registration.status %>
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="/registrations/<%= registration.id %>"
+                                    class="btn btn-small btn-secondary"
+                                >
+                                    Détail
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    <% } else { %>
+
+        <div class="empty-state">
+
+            <h3>Aucune inscription</h3>
+
+            <p>
+                Aucune inscription n est actuellement enregistrée.
+            </p>
+
+        </div>
+
+    <% } %>
+
+</main>
+
+<%- include('../partials/footer') %>
