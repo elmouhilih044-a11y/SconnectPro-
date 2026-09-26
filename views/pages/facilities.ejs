@@ -1,0 +1,85 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="page-container">
+
+    <section class="page-header">
+        <div>
+            <span class="eyebrow">Infrastructure</span>
+            <h1>Installations sportives</h1>
+            <p>Gestion des salles et de leur capacité</p>
+        </div>
+
+        <a href="/facilities/new" class="btn btn-primary">
+            Ajouter une installation
+        </a>
+    </section>
+
+    <% if (facilities && facilities.length > 0) { %>
+
+        <div class="cards-grid">
+
+            <% facilities.forEach(function(facility) { %>
+
+                <article class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <span class="card-label">Installation</span>
+                            <h2><%= facility.name %></h2>
+                        </div>
+
+                        <span class="status-badge">
+                            Disponible
+                        </span>
+                    </div>
+
+                    <div class="card-content">
+
+                        <div class="info-row">
+                            <span>Localisation</span>
+                            <strong>
+                                <%= facility.location || facility.address || '-' %>
+                            </strong>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Jauge ERP</span>
+                            <strong>
+                                <%= facility.erp_capacity %> personnes
+                            </strong>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Division</span>
+                            <strong>
+                                <%= facility.is_divisible ? 'Oui' : 'Non' %>
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="card-actions">
+                        <a href="/facilities/<%= facility.id %>" class="btn btn-secondary">
+                            Consulter
+                        </a>
+                    </div>
+
+                </article>
+
+            <% }) %>
+
+        </div>
+
+    <% } else { %>
+
+        <div class="empty-state">
+            <h3>Aucune installation</h3>
+            <p>Aucune installation sportive n est enregistrée.</p>
+        </div>
+
+    <% } %>
+
+</main>
+
+<%- include('../partials/footer') %>
