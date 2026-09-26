@@ -1,0 +1,103 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="page-container">
+
+    <section class="hero">
+        <div>
+            <span class="eyebrow">SportConnect Pro</span>
+            <h1>Tableau de bord</h1>
+            <p>Vue globale de la gestion sportive municipale</p>
+        </div>
+    </section>
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+            <span class="stat-label">Installations</span>
+            <strong><%= facilities ? facilities.length : 0 %></strong>
+            <span class="stat-description">Salles disponibles</span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">Activités</span>
+            <strong><%= activities ? activities.length : 0 %></strong>
+            <span class="stat-description">Activités programmées</span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">Adhérents</span>
+            <strong><%= members ? members.length : 0 %></strong>
+            <span class="stat-description">Membres enregistrés</span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">Inscriptions</span>
+            <strong><%= registrations ? registrations.length : 0 %></strong>
+            <span class="stat-description">Inscriptions enregistrées</span>
+        </div>
+
+    </section>
+
+    <section class="section-header">
+        <div>
+            <h2>Activités récentes</h2>
+            <p>Les activités actuellement proposées</p>
+        </div>
+
+        <a href="/activities" class="btn btn-primary">
+            Voir les activités
+        </a>
+    </section>
+
+    <% if (activities && activities.length > 0) { %>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activité</th>
+                        <th>Sport</th>
+                        <th>Jour</th>
+                        <th>Horaire</th>
+                        <th>Capacité</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% activities.slice(0, 5).forEach(function(activity) { %>
+                        <tr>
+                            <td>
+                                <strong><%= activity.name %></strong>
+                            </td>
+
+                            <td><%= activity.sport_type %></td>
+
+                            <td><%= activity.day_of_week %></td>
+
+                            <td>
+                                <%= activity.start_time %> -
+                                <%= activity.end_time %>
+                            </td>
+
+                            <td>
+                                <%= activity.max_capacity %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+    <% } else { %>
+
+        <div class="empty-state">
+            <h3>Aucune activité</h3>
+            <p>Aucune activité n est actuellement enregistrée.</p>
+        </div>
+
+    <% } %>
+
+</main>
+
+<%- include('../partials/footer') %>
