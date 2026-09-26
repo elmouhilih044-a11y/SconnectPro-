@@ -3,9 +3,10 @@ const facilityController = require('../controllers/facilityController')
 const associationController=require('../controllers/associationController')
 const activityController=require('../controllers/activityController')
 const registrationController=require('../controllers/registrationController')
-const waintingListController=require('../controllers/waitingListController');
+const waitingListController=require('../controllers/waitingListController');
 const memberController=require('../controllers/memberController')
 const familyController=require('../controllers/familyController')
+const serveStaticFile = require('./staticFiles')
 
 
 const router= findMyWay({
@@ -16,6 +17,8 @@ const router= findMyWay({
         res.end('<h1>404 - Page non trouvée</h1>')
     }
 });
+router.on('GET', '/public/*', serveStaticFile)
+
 router.on('GET', '/', (req, res) => {
     res.writeHead(200, {
         'Content-Type': 'text/html'
@@ -47,11 +50,11 @@ router.on('GET', '/registrations/:id', registrationController.getRegistration)
 router.on('POST', '/registrations', registrationController.addRegistration)
 router.on('DELETE', '/registrations/:id', registrationController.removeRegistration)
 
-router.on('GET', '/waiting-list', waintingListController.getWaitingList)
-router.on('GET', '/waiting-list/:id', waintingListController.getWaiting)
-router.on('POST', '/waiting-list', waintingListController.addWaiting)
-router.on('PUT', '/waiting-list/:id', waintingListController.editWaiting)
-router.on('DELETE', '/waiting-list/:id', waintingListController.removeWaiting)
+router.on('GET', '/waiting-list', waitingListController.getWaitingList)
+router.on('GET', '/waiting-list/:id', waitingListController.getWaiting)
+router.on('POST', '/waiting-list', waitingListController.addWaiting)
+router.on('PUT', '/waiting-list/:id', waitingListController.editWaiting)
+router.on('DELETE', '/waiting-list/:id', waitingListController.removeWaiting)
 
 router.on('GET', '/members', memberController.getMembers)
 router.on('GET', '/members/:id', memberController.getMember)

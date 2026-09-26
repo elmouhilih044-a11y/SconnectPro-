@@ -1,0 +1,42 @@
+body {
+    background: white
+}
+
+.navbar,
+.footer,
+.no-print,
+button,
+form {
+    display: none !important
+}
+
+.container,
+.page-container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0
+}
+
+.card,
+.table-container {
+    box-shadow: none;
+    border: 1px solid #ddd
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px
+}
+
+@media print {
+    body {
+        font-size: 12px
+    }
+}
