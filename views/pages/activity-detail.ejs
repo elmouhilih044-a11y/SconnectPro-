@@ -1,0 +1,172 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="page-container">
+
+    <% if (activity) { %>
+
+        <section class="page-header">
+
+            <div>
+                <span class="eyebrow"><%= activity.sport_type %></span>
+                <h1><%= activity.name %></h1>
+                <p>Informations détaillées de l activité</p>
+            </div>
+
+            <a href="/activities" class="btn btn-secondary">
+                Retour
+            </a>
+
+        </section>
+
+        <div class="detail-grid">
+
+            <section class="card">
+
+                <div class="card-header">
+                    <h2>Informations</h2>
+                </div>
+
+                <div class="card-content">
+
+                    <div class="info-row">
+                        <span>Sport</span>
+                        <strong><%= activity.sport_type %></strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Jour</span>
+                        <strong><%= activity.day_of_week %></strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Horaire</span>
+                        <strong>
+                            <%= activity.start_time %> -
+                            <%= activity.end_time %>
+                        </strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Catégorie d âge</span>
+                        <strong>
+                            <%= activity.age_category || 'Toutes les catégories' %>
+                        </strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Capacité</span>
+                        <strong><%= activity.max_capacity %> personnes</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Tarif de base</span>
+                        <strong><%= activity.base_price %> MAD</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Tout public</span>
+                        <strong>
+                            <%= activity.is_all_public ? 'Oui' : 'Non' %>
+                        </strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="card">
+
+                <div class="card-header">
+                    <h2>Inscription</h2>
+                </div>
+
+                <div class="card-content">
+
+                    <p>
+                        Vous pouvez inscrire un adhérent à cette activité.
+                    </p>
+
+                    <a href="/registrations/new?activity_id=<%= activity.id %>" class="btn btn-primary">
+                        Inscrire un adhérent
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+        <% if (waitingList && waitingList.length > 0) { %>
+
+            <section class="section-block">
+
+                <div class="section-header">
+                    <div>
+                        <h2>File d attente</h2>
+                        <p>Adhérents actuellement en attente</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Adhérent</th>
+                                <th>Priorité</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <% waitingList.forEach(function(item, index) { %>
+
+                                <tr>
+                                    <td><%= index + 1 %></td>
+
+                                    <td>
+                                        <%= item.first_name || '' %>
+                                        <%= item.last_name || '' %>
+                                    </td>
+
+                                    <td>
+                                        <%= item.priority_score %>
+                                    </td>
+
+                                    <td>
+                                        <span class="status-badge">
+                                            <%= item.status %>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            <% }) %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        <% } %>
+
+    <% } else { %>
+
+        <div class="empty-state">
+            <h3>Activité introuvable</h3>
+            <a href="/activities" class="btn btn-primary">
+                Retour aux activités
+            </a>
+        </div>
+
+    <% } %>
+
+</main>
+
+<%- include('../partials/footer') %>
