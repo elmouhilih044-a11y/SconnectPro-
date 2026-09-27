@@ -3,212 +3,270 @@
 
 <main class="page-container">
 
-    <section class="page-header">
-        <div>
-            <span class="eyebrow">Gestion</span>
+```
+<section class="page-header">
+    <div>
+        <span class="eyebrow">Gestion</span>
 
-            <h1>
-                <%= activity ? 'Modifier l activité' : 'Nouvelle activité' %>
-            </h1>
+        <h1>
+            <%= activity ? 'Modifier l activité' : 'Nouvelle activité' %>
+        </h1>
 
-            <p>Configurer une activité sportive</p>
-        </div>
-    </section>
+        <p>Configurer une activité sportive</p>
+    </div>
+</section>
 
-    <section class="form-card">
+<section class="form-card">
 
-        <form
-            method="POST"
-            action="<%= activity ? '/activities/' + activity.id : '/activities' %>"
-        >
+    <form
+        id="activityForm"
+        action="<%= activity ? '/activities/' + activity.id : '/activities' %>"
+    >
 
-            <div class="form-grid">
+        <div class="form-grid">
 
-                <div class="form-group">
-                    <label for="name">Nom de l activité</label>
+            <div class="form-group">
+                <label for="name">Nom de l activité</label>
 
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        value="<%= activity ? activity.name : '' %>"
-                    >
-                </div>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value="<%= activity ? activity.name : '' %>"
+                >
+            </div>
 
-                <div class="form-group">
-                    <label for="sport_type">Sport</label>
+            <div class="form-group">
+                <label for="sport_type">Sport</label>
 
-                    <input
-                        type="text"
-                        id="sport_type"
-                        name="sport_type"
-                        required
-                        value="<%= activity ? activity.sport_type : '' %>"
-                    >
-                </div>
+                <input
+                    type="text"
+                    id="sport_type"
+                    name="sport_type"
+                    required
+                    value="<%= activity ? activity.sport_type : '' %>"
+                >
+            </div>
 
-                <div class="form-group">
-                    <label for="facility_id">Installation</label>
+            <div class="form-group">
+                <label for="facility_id">Installation</label>
 
-                    <select id="facility_id" name="facility_id" required>
+                <select id="facility_id" name="facility_id" required>
+                    <option value="">Choisir une installation</option>
 
-                        <option value="">Choisir une installation</option>
-
-                        <% if (facilities) { %>
-
-                            <% facilities.forEach(function(facility) { %>
-
-                                <option
-                                    value="<%= facility.id %>"
-                                    <%= activity && activity.facility_id == facility.id ? 'selected' : '' %>
-                                >
-                                    <%= facility.name %>
-                                </option>
-
-                            <% }) %>
-
-                        <% } %>
-
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="sub_zone">Sous-zone</label>
-
-                    <input
-                        type="text"
-                        id="sub_zone"
-                        name="sub_zone"
-                        value="<%= activity ? activity.sub_zone || '' : '' %>"
-                        placeholder="Optionnel"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="day_of_week">Jour</label>
-
-                    <select id="day_of_week" name="day_of_week" required>
-
-                        <% const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'] %>
-
-                        <% days.forEach(function(day) { %>
+                    <% if (facilities) { %>
+                        <% facilities.forEach(function(facility) { %>
 
                             <option
-                                value="<%= day %>"
-                                <%= activity && activity.day_of_week === day ? 'selected' : '' %>
+                                value="<%= facility.id %>"
+                                <%= activity && activity.facility_id == facility.id ? 'selected' : '' %>
                             >
-                                <%= day %>
+                                <%= facility.name %>
                             </option>
 
                         <% }) %>
+                    <% } %>
 
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="start_time">Heure de début</label>
-
-                    <input
-                        type="time"
-                        id="start_time"
-                        name="start_time"
-                        required
-                        value="<%= activity ? activity.start_time : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="end_time">Heure de fin</label>
-
-                    <input
-                        type="time"
-                        id="end_time"
-                        name="end_time"
-                        required
-                        value="<%= activity ? activity.end_time : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="max_capacity">Capacité maximale</label>
-
-                    <input
-                        type="number"
-                        id="max_capacity"
-                        name="max_capacity"
-                        min="1"
-                        required
-                        value="<%= activity ? activity.max_capacity : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="base_price">Tarif de base</label>
-
-                    <input
-                        type="number"
-                        id="base_price"
-                        name="base_price"
-                        min="0"
-                        step="0.01"
-                        required
-                        value="<%= activity ? activity.base_price : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="age_category">Catégorie d âge</label>
-
-                    <select id="age_category" name="age_category">
-
-                        <option value="">Toutes</option>
-
-                        <option value="Eveil/Baby-Sport">Eveil/Baby-Sport</option>
-                        <option value="Poussin U9">Poussin U9</option>
-                        <option value="Benjamin U11">Benjamin U11</option>
-                        <option value="Minime U13">Minime U13</option>
-                        <option value="Cadet U15">Cadet U15</option>
-                        <option value="Junior U18">Junior U18</option>
-                        <option value="Senior">Senior</option>
-                        <option value="Veteran/Master">Veteran/Master</option>
-
-                    </select>
-                </div>
-
+                </select>
             </div>
 
-            <div class="form-checkboxes">
+            <div class="form-group">
+                <label for="sub_zone">Sous-zone</label>
 
-                <label>
-                    <input
-                        type="checkbox"
-                        name="is_all_public"
-                        value="true"
-                        <%= activity && activity.is_all_public ? 'checked' : '' %>
-                    >
-                    Activité ouverte à tout public
-                </label>
-
+                <input
+                    type="text"
+                    id="sub_zone"
+                    name="sub_zone"
+                    value="<%= activity ? activity.sub_zone || '' : '' %>"
+                    placeholder="Optionnel"
+                >
             </div>
 
-            <div class="form-actions">
+            <div class="form-group">
+                <label for="day_of_week">Jour</label>
 
-                <a href="/activities" class="btn btn-secondary">
-                    Annuler
-                </a>
+                <select id="day_of_week" name="day_of_week" required>
 
-                <button type="submit" class="btn btn-primary">
-                    <%= activity ? 'Enregistrer' : 'Créer l activité' %>
-                </button>
+                    <% const days = [
+                        'Lundi',
+                        'Mardi',
+                        'Mercredi',
+                        'Jeudi',
+                        'Vendredi',
+                        'Samedi',
+                        'Dimanche'
+                    ] %>
 
+                    <% days.forEach(function(day) { %>
+
+                        <option
+                            value="<%= day %>"
+                            <%= activity && activity.day_of_week == day ? 'selected' : '' %>
+                        >
+                            <%= day %>
+                        </option>
+
+                    <% }) %>
+
+                </select>
             </div>
 
-        </form>
+            <div class="form-group">
+                <label for="start_time">Heure de début</label>
 
-    </section>
+                <input
+                    type="time"
+                    id="start_time"
+                    name="start_time"
+                    required
+                    value="<%= activity ? activity.start_time : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="end_time">Heure de fin</label>
+
+                <input
+                    type="time"
+                    id="end_time"
+                    name="end_time"
+                    required
+                    value="<%= activity ? activity.end_time : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="max_capacity">Capacité maximale</label>
+
+                <input
+                    type="number"
+                    id="max_capacity"
+                    name="max_capacity"
+                    min="1"
+                    required
+                    value="<%= activity ? activity.max_capacity : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="base_price">Tarif de base</label>
+
+                <input
+                    type="number"
+                    id="base_price"
+                    name="base_price"
+                    min="0"
+                    step="0.01"
+                    required
+                    value="<%= activity ? activity.base_price : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="age_category">Catégorie d âge</label>
+
+                <select id="age_category" name="age_category">
+
+                    <option value="">Toutes</option>
+                    <option value="Eveil/Baby-Sport">Eveil/Baby-Sport</option>
+                    <option value="Poussin U9">Poussin U9</option>
+                    <option value="Benjamin U11">Benjamin U11</option>
+                    <option value="Minime U13">Minime U13</option>
+                    <option value="Cadet U15">Cadet U15</option>
+                    <option value="Junior U18">Junior U18</option>
+                    <option value="Senior">Senior</option>
+                    <option value="Veteran/Master">Veteran/Master</option>
+
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-checkboxes">
+
+            <label>
+                <input
+                    type="checkbox"
+                    id="is_all_public"
+                    name="is_all_public"
+                    value="true"
+                    <%= activity && activity.is_all_public ? 'checked' : '' %>
+                >
+
+                Activité ouverte à tout public
+            </label>
+
+        </div>
+
+        <div class="form-actions">
+
+            <a href="/activities" class="btn btn-secondary">
+                Annuler
+            </a>
+
+            <button type="submit" class="btn btn-primary">
+                <%= activity ? 'Enregistrer' : 'Créer l activité' %>
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+```
 
 </main>
+
+<script>
+
+    const form = document.getElementById('activityForm');
+
+    form.addEventListener('submit', async function(event) {
+
+        event.preventDefault();
+
+        const data = {
+            name: document.getElementById('name').value,
+            sport_type: document.getElementById('sport_type').value,
+            facility_id: Number(document.getElementById('facility_id').value),
+            sub_zone: document.getElementById('sub_zone').value || null,
+            day_of_week: document.getElementById('day_of_week').selectedIndex + 1,
+            start_time: document.getElementById('start_time').value,
+            end_time: document.getElementById('end_time').value,
+            max_capacity: Number(document.getElementById('max_capacity').value),
+            base_price: Number(document.getElementById('base_price').value),
+            age_category: document.getElementById('age_category').value,
+            is_all_public: document.getElementById('is_all_public').checked
+        };
+
+        try {
+
+            const response = await fetch(form.action, {
+                method: '<%= activity ? "PUT" : "POST" %>',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de l\'enregistrement');
+            }
+
+            window.location.href = '/activities';
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert('Erreur lors de l\'enregistrement de l\'activité');
+
+        }
+
+    });
+
+</script>
 
 <script src="/public/js/client-validation.js"></script>
 

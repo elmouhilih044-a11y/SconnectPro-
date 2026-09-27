@@ -3,154 +3,168 @@
 
 <main class="page-container">
 
-    <section class="page-header">
-        <div>
-            <span class="eyebrow">Infrastructure</span>
+```
+<section class="page-header">
+    <div>
+        <span class="eyebrow">Infrastructure</span>
 
-            <h1>
-                <%= facility ? 'Modifier une installation' : 'Ajouter une installation' %>
-            </h1>
+        <h1>
+            <%= facility ? 'Modifier une installation' : 'Ajouter une installation' %>
+        </h1>
 
-            <p>
-                <%= facility
-                    ? 'Modifier les informations de cette installation sportive'
-                    : 'Ajouter une nouvelle installation sportive'
-                %>
-            </p>
+        <p>
+            <%= facility
+                ? 'Modifier les informations de cette installation sportive'
+                : 'Ajouter une nouvelle installation sportive'
+            %>
+        </p>
+    </div>
+</section>
+
+<section class="form-section">
+
+    <form
+        id="facilityForm"
+        action="<%= facility ? '/facilities/' + facility.id : '/facilities' %>"
+    >
+
+        <div class="form-group">
+            <label for="name">Nom de l'installation</label>
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="<%= facility ? facility.name : '' %>"
+                required
+            >
         </div>
-    </section>
 
+        <div class="form-group">
+            <label for="type">Type d'installation</label>
 
-    <section class="form-section">
+            <input
+                type="text"
+                id="type"
+                name="type"
+                value="<%= facility ? (facility.type || '') : '' %>"
+                placeholder="Ex : Piscine, Terrain, Salle..."
+                required
+            >
+        </div>
 
-        <form
-            id="facilityForm"
-            method="POST"
-            action="<%= facility ? '/facilities/' + facility.id : '/facilities' %>"
-        >
+        <div class="form-group">
+            <label for="erp_capacity">Jauge ERP</label>
 
-            <!-- Nom -->
-            <div class="form-group">
-                <label for="name">Nom de l'installation</label>
+            <input
+                type="number"
+                id="erp_capacity"
+                name="erp_capacity"
+                value="<%= facility ? facility.erp_capacity : '' %>"
+                min="1"
+                required
+            >
+        </div>
 
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value="<%= facility ? facility.name : '' %>"
-                    required
+        <div class="form-group">
+            <label for="is_divisible">
+                Installation divisible
+            </label>
+
+            <select id="is_divisible" name="is_divisible">
+
+                <option
+                    value="false"
+                    <%= facility && !facility.is_divisible ? 'selected' : '' %>
                 >
-            </div>
+                    Non
+                </option>
 
-
-            <!-- Localisation -->
-            <div class="form-group">
-                <label for="location">Localisation</label>
-
-                <input
-                    type="text"
-                    id="location"
-                    name="location"
-                    value="<%= facility ? (facility.location || '') : '' %>"
-                    required
+                <option
+                    value="true"
+                    <%= facility && facility.is_divisible ? 'selected' : '' %>
                 >
-            </div>
+                    Oui
+                </option>
 
+            </select>
+        </div>
 
-            <!-- Capacité ERP -->
-            <div class="form-group">
-                <label for="erp_capacity">Jauge ERP</label>
+        <div class="form-actions">
 
-                <input
-                    type="number"
-                    id="erp_capacity"
-                    name="erp_capacity"
-                    value="<%= facility ? facility.erp_capacity : '' %>"
-                    min="1"
-                    required
-                >
-            </div>
+            <a href="/facilities" class="btn btn-secondary">
+                Annuler
+            </a>
 
+            <button type="submit" class="btn btn-primary">
+                <%= facility ? 'Modifier' : 'Ajouter' %>
+            </button>
 
-            <!-- Installation divisible -->
-            <div class="form-group">
-                <label for="is_divisible">
-                    Installation divisible
-                </label>
+        </div>
 
-                <select id="is_divisible" name="is_divisible">
-                    <option
-                        value="false"
-                        <%= facility && !facility.is_divisible ? 'selected' : '' %>
-                    >
-                        Non
-                    </option>
+    </form>
 
-                    <option
-                        value="true"
-                        <%= facility && facility.is_divisible ? 'selected' : '' %>
-                    >
-                        Oui
-                    </option>
-                </select>
-            </div>
-
-
-            <!-- Boutons -->
-            <div class="form-actions">
-
-                <a href="/facilities" class="btn btn-secondary">
-                    Annuler
-                </a>
-
-                <button type="submit" class="btn btn-primary">
-                    <%= facility ? 'Modifier' : 'Ajouter' %>
-                </button>
-
-            </div>
-
-        </form>
-
-    </section>
+</section>
+```
 
 </main>
 
 <%- include('../partials/footer') %>
 
-
 <script>
+
     const form = document.getElementById('facilityForm');
 
     form.addEventListener('submit', async function(event) {
+
         event.preventDefault();
 
-        const formData = new FormData(form);
-
         const data = {
-            name: formData.get('name'),
-            location: formData.get('location'),
-            erp_capacity: Number(formData.get('erp_capacity')),
-            is_divisible: formData.get('is_divisible') === 'true'
+
+            name: document.getElementById('name').value,
+
+            type: document.getElementById('type').value,
+
+            erp_capacity: Number(
+                document.getElementById('erp_capacity').value
+            ),
+
+            is_divisible:
+                document.getElementById('is_divisible').value === 'true'
         };
 
         try {
+
             const response = await fetch(form.action, {
+
                 method: '<%= facility ? "PUT" : "POST" %>',
+
                 headers: {
                     'Content-Type': 'application/json'
                 },
+
                 body: JSON.stringify(data)
+
             });
 
             if (!response.ok) {
-                throw new Error('Erreur lors de l'enregistrement');
+                throw new Error(
+                    'Erreur lors de l\'enregistrement'
+                );
             }
 
             window.location.href = '/facilities';
 
         } catch (error) {
+
             console.error(error);
-            alert('Erreur serveur');
+
+            alert(
+                'Erreur lors de l\'enregistrement de l\'installation'
+            );
+
         }
+
     });
+
 </script>

@@ -49,6 +49,7 @@ route('PUT', '/associations/:id', associationController.editAssociation)
 route('DELETE', '/associations/:id', associationController.removeAssociation)
 
 route('GET', '/activities', activityController.getActivities)
+route('GET', '/activities/new', activityController.newActivityForm)
 route('GET', '/activities/:id', activityController.getActivity)
 route('POST', '/activities', activityController.addActivity)
 route('PUT', '/activities/:id', activityController.editActivity)

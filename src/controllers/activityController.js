@@ -1,5 +1,6 @@
 const activityService = require('../services/activityService');
 const render = require('../core/renderer');
+const facilityService = require('../services/facilityService');
 async function getActivities(req, res){
     try{
         const activities= await activityService.getActivities()
@@ -111,10 +112,30 @@ async function removeActivity(req,res){
         res.end('Erreur serveur');
     }
 }
+async function newActivityForm(req, res) {
+    try {
+        const facilities = await facilityService.getFacilities();
+
+        render(res, 'pages/activity-form.ejs', {
+            activity: null,
+            facilities
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.writeHead(500, {
+            'Content-Type': 'text/plain'
+        });
+
+        res.end('Erreur serveur');
+    }
+}
+
 module.exports= {
     getActivities,
     getActivity,
     addActivity,
     editActivity,
-    removeActivity
+    removeActivity,
+    newActivityForm
 }
