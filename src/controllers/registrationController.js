@@ -15,7 +15,7 @@ async function getRegistrations(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
@@ -29,7 +29,7 @@ async function getRegistration(req, res) {
 
         if (!registration) {
             res.writeHead(404, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             return res.end('Inscription introuvable');
@@ -45,7 +45,7 @@ async function getRegistration(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
@@ -72,7 +72,7 @@ async function addRegistration(req, res) {
             // Vérification member_id
             if (!registrationData.member_id) {
                 res.writeHead(400, {
-                    'Content-Type': 'text/plain'
+                    'Content-Type': 'text/plain; charset=utf-8'
                 });
 
                 return res.end('member_id est obligatoire');
@@ -81,7 +81,7 @@ async function addRegistration(req, res) {
             // Vérification activity_id
             if (!registrationData.activity_id) {
                 res.writeHead(400, {
-                    'Content-Type': 'text/plain'
+                    'Content-Type': 'text/plain; charset=utf-8'
                 });
 
                 return res.end('activity_id est obligatoire');
@@ -104,7 +104,7 @@ async function addRegistration(req, res) {
             console.error(error);
 
             res.writeHead(400, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             res.end(error.message);
@@ -120,7 +120,7 @@ async function removeRegistration(req, res) {
 
         if (!registration) {
             res.writeHead(404, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             return res.end('Inscription introuvable');
@@ -136,7 +136,7 @@ async function removeRegistration(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
@@ -152,7 +152,7 @@ async function newRegistrationForm(req, res) {
         // Vérifier que les IDs existent dans l'URL
         if (!activityId) {
             res.writeHead(400, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             return res.end('activity_id est obligatoire');
@@ -160,7 +160,7 @@ async function newRegistrationForm(req, res) {
 
         if (!memberId) {
             res.writeHead(400, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             return res.end('member_id est obligatoire');
@@ -176,7 +176,7 @@ async function newRegistrationForm(req, res) {
         // Vérifier que l'activité existe
         if (!activity) {
             res.writeHead(404, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             return res.end('Activité introuvable');
@@ -185,7 +185,7 @@ async function newRegistrationForm(req, res) {
         // Vérifier que le membre existe
         if (!member) {
             res.writeHead(404, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             return res.end('Membre introuvable');
@@ -203,7 +203,7 @@ async function newRegistrationForm(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
