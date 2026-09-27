@@ -18,19 +18,19 @@ INSERT INTO activities
 VALUES
 (1, 1, 'Football Jeunes', 'Football', 300.00,
  30, 2, '17:00', '18:30', 'Terrain A',
- 'U12', false, 'ACTIVE'),
+ 'Benjamin U11', false, 'active'),
 
 (1, 2, 'Basketball Adultes', 'Basketball', 350.00,
  25, 3, '18:00', '19:30', 'Terrain B',
- 'Senior', true, 'ACTIVE'),
+ 'Senior', true, 'active'),
 
 (2, 1, 'Natation Loisirs', 'Natation', 250.00,
  20, 4, '10:00', '11:00', 'Bassin principal',
- 'Senior', true, 'ACTIVE'),
+ 'Senior', true, 'active'),
 
 (3, 3, 'Boxe Débutants', 'Boxe', 400.00,
  15, 5, '18:00', '19:30', 'Salle principale',
- 'Senior', true, 'ACTIVE');
+ 'Senior', true, 'active');
 
 INSERT INTO families
 (reference_name, quotient_familial)
@@ -60,19 +60,19 @@ INSERT INTO registrations
  installment_1, installment_2, installment_3,
  status, medical_compliance_status)
 VALUES
-(1, 1, 240.00, '3_INSTALLMENTS',
+(1, 1, 240.00, '3x',
  80.00, 80.00, 80.00,
- 'CONFIRMED', 'COMPLIANT'),
+ 'confirmed', 'compliant'),
 
-(3, 2, 350.00, 'ONE_PAYMENT',
- 350.00, 0.00, 0.00,
- 'CONFIRMED', 'COMPLIANT'),
+(3, 2, 350.00, '1x',
+ 350.00, NULL, NULL,
+ 'confirmed', 'compliant'),
 
-(4, 3, 400.00, '2_INSTALLMENTS',
- 200.00, 200.00, 0.00,
- 'CONFIRMED', 'COMPLIANT');
+(4, 3, 400.00, '1x',
+ 400.00, NULL, NULL,
+ 'confirmed', 'compliant');
 
 INSERT INTO waiting_list
 (activity_id, member_id, priority_score, status, deadline_confirmation)
 VALUES
-(1, 2, 80, 'WAITING', NULL);
+(1, 2, 80, 'waiting', NULL);
