@@ -72,6 +72,14 @@
             </div>
 
             <div class="form-group">
+    <label for="status">Statut</label>
+    <select id="status" name="status" required>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+    </select>
+</div>
+
+            <div class="form-group">
                 <label for="sub_zone">Sous-zone</label>
 
                 <input
@@ -237,7 +245,8 @@
             max_capacity: Number(document.getElementById('max_capacity').value),
             base_price: Number(document.getElementById('base_price').value),
             age_category: document.getElementById('age_category').value,
-            is_all_public: document.getElementById('is_all_public').checked
+            is_all_public: document.getElementById('is_all_public').checked,
+             status: document.getElementById('status').value
         };
 
         try {

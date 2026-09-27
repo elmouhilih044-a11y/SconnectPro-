@@ -13,25 +13,31 @@ async function getActivities(req, res){
         res.end('Erreur serveur')
     }
 }
-async function getActivity(req, res){
-    try{
-        const activity= await activityService.getActivity(req.params.id)
-        if(!activity){
-            res.writeHead(404,{
-                'Content-Type':'text/plain'
-            })
-            return res.end('Activité introuvable')
+async function getActivity(req, res) {
+    try {
+        const activity = await activityService.getActivity(req.params.id);
+
+        if (!activity) {
+            res.writeHead(404, {
+                'Content-Type': 'text/plain'
+            });
+
+            return res.end('Activité introuvable');
         }
-        res.writeHead(200,{
-            'Content-Type': 'application/json'
-        })
-        res.end(JSON.stringify(activity))
-    }catch(error){
-        console.error(error)
-        res.writeHead(500,{
-            'Content-Type':'text/plain'
+
+        render(res, 'pages/activity-detail.ejs', {
+            activity,
+            waitingList: []
         });
-        res.end('Erreur serveur')
+
+    } catch (error) {
+        console.error(error);
+
+        res.writeHead(500, {
+            'Content-Type': 'text/plain'
+        });
+
+        res.end('Erreur serveur');
     }
 }
 async function addActivity(req, res){

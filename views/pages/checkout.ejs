@@ -1,16 +1,15 @@
+```ejs
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
 <main class="page-container">
 
     <section class="page-header">
-
         <div>
             <span class="eyebrow">Inscription</span>
             <h1>Récapitulatif et paiement</h1>
             <p>Vérifiez les informations avant de confirmer</p>
         </div>
-
     </section>
 
     <div class="detail-grid">
@@ -58,6 +57,7 @@
 
         </section>
 
+
         <section class="card">
 
             <div class="card-header">
@@ -67,111 +67,150 @@
             <div class="card-content">
 
                 <div class="price-box">
-
                     <span>Prix final</span>
 
                     <strong id="price_result">
                         <%= finalPrice || (activity ? activity.base_price : 0) %> MAD
                     </strong>
-
                 </div>
 
-                <form method="POST" action="/registrations">
 
-                    <input
-                        type="hidden"
-                        name="member_id"
-                        value="<%= member ? member.id : '' %>"
-                    >
+                <% if (!member) { %>
 
-                    <input
-                        type="hidden"
-                        name="activity_id"
-                        value="<%= activity ? activity.id : '' %>"
-                    >
-
-                    <input
-                        type="hidden"
-                        id="base_price"
-                        value="<%= activity ? activity.base_price : 0 %>"
-                    >
-
-                    <div class="form-group">
-                        <label>
-                            <input
-                                type="checkbox"
-                                id="is_resident"
-                                name="is_resident"
-                                <%= member && member.is_resident ? 'checked' : '' %>
-                            >
-                            Résident
-                        </label>
+                    <div class="error-message">
+                        Membre introuvable.
                     </div>
 
-                    <div class="form-group">
-                        <label for="family_member_count">
-                            Nombre de membres de la famille
-                        </label>
+                <% } else if (!activity) { %>
+
+                    <div class="error-message">
+                        Activité introuvable.
+                    </div>
+
+                <% } else { %>
+
+                    <form method="POST" action="/registrations">
 
                         <input
-                            type="number"
-                            id="family_member_count"
-                            name="family_member_count"
-                            min="1"
-                            value="<%= familyMemberCount || 1 %>"
+                            type="hidden"
+                            name="member_id"
+                            value="<%= member.id %>"
                         >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="quotient_familial">
-                            Quotient familial
-                        </label>
 
                         <input
-                            type="number"
-                            id="quotient_familial"
-                            name="quotient_familial"
-                            min="0"
-                            value="<%= member ? member.quotient_familial || 0 : 0 %>"
+                            type="hidden"
+                            name="activity_id"
+                            value="<%= activity.id %>"
                         >
-                    </div>
 
-                    <div class="form-group">
-                        <label>
+                        <input
+                            type="hidden"
+                            id="base_price"
+                            value="<%= activity.base_price %>"
+                        >
+
+
+                        <div class="form-group">
+
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    id="is_resident"
+                                    name="is_resident"
+                                    <%= member.is_resident ? 'checked' : '' %>
+                                >
+
+                                Résident
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="family_member_count">
+                                Nombre de membres de la famille
+                            </label>
+
                             <input
-                                type="checkbox"
-                                id="has_pass_sport"
-                                name="has_pass_sport"
+                                type="number"
+                                id="family_member_count"
+                                name="family_member_count"
+                                min="1"
+                                value="<%= familyMemberCount || 1 %>"
                             >
-                            Pass'Sport
-                        </label>
-                    </div>
 
-                    <div class="form-group">
+                        </div>
 
-                        <label for="payment_plan">
-                            Plan de paiement
-                        </label>
 
-                        <select id="payment_plan" name="payment_plan">
+                        <div class="form-group">
 
-                            <option value="1x">
-                                Paiement en 1 fois
-                            </option>
+                            <label for="quotient_familial">
+                                Quotient familial
+                            </label>
 
-                            <option value="3x">
-                                Paiement en 3 fois
-                            </option>
+                            <input
+                                type="number"
+                                id="quotient_familial"
+                                name="quotient_familial"
+                                min="0"
+                                value="<%= member.quotient_familial || 0 %>"
+                            >
 
-                        </select>
+                        </div>
 
-                    </div>
 
-                    <button type="submit" class="btn btn-primary">
-                        Confirmer l inscription
-                    </button>
+                        <div class="form-group">
 
-                </form>
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    id="has_pass_sport"
+                                    name="has_pass_sport"
+                                >
+
+                                Pass'Sport
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="payment_plan">
+                                Plan de paiement
+                            </label>
+
+                            <select
+                                id="payment_plan"
+                                name="payment_plan"
+                            >
+
+                                <option value="1x">
+                                    Paiement en 1 fois
+                                </option>
+
+                                <option value="3x">
+                                    Paiement en 3 fois
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Confirmer l'inscription
+                        </button>
+
+                    </form>
+
+                <% } %>
 
             </div>
 
@@ -184,3 +223,4 @@
 <script src="/public/js/dynamic-pricing.js"></script>
 
 <%- include('../partials/footer') %>
+```

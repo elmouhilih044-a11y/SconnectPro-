@@ -7,6 +7,7 @@ const waitingListController=require('../controllers/waitingListController');
 const memberController=require('../controllers/memberController')
 const familyController=require('../controllers/familyController')
 const serveStaticFile = require('./staticFiles')
+const dashboardController = require('../controllers/dashboardController');
 
 
 const router= findMyWay({
@@ -27,12 +28,7 @@ function route(method, path, handler) {
 
 router.on('GET', '/public/*', serveStaticFile)
 
-router.on('GET', '/', (req, res) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/html'
-    });
-    res.end('<h1>Accueil</h1>')
-});
+route('GET', '/', dashboardController.getDashboard);
 
 
 route('GET', '/facilities', facilityController.getFacilities)
