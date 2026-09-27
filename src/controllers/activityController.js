@@ -19,7 +19,7 @@ async function getActivities(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
@@ -31,7 +31,7 @@ async function getActivity(req, res) {
 
         if (!activity) {
             res.writeHead(404, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             return res.end('Activité introuvable');
@@ -46,7 +46,7 @@ async function getActivity(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
@@ -68,7 +68,7 @@ async function addActivity(req, res){
         } catch (error){
             console.error(error)
             res.writeHead(400,{
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             })
             res.end(error.message)
         }
@@ -114,7 +114,7 @@ async function removeActivity(req,res){
 
         if(!activity){
             res.writeHead(404,{
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
             return res.end('Activité introuvable');
         }
@@ -125,7 +125,7 @@ async function removeActivity(req,res){
     }catch(error) {
         console.error(error)
         res.writeHead(500,{
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
         res.end('Erreur serveur');
     }
@@ -142,7 +142,7 @@ async function newActivityForm(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
