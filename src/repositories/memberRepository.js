@@ -1,23 +1,43 @@
-const db=require('../config/db');
-async function getMembers(){
-    const result=await db.pool.query(
+const db = require('../config/db');
+
+async function getMembers() {
+    const result = await db.pool.query(
         'SELECT * FROM members ORDER BY id'
-    )
+    );
+
     return result.rows;
 }
-async function getMember(id){
-    const result=await db.pool.query(
-        'SELECT * FROM members WHERE id=$1',[id]
+
+async function getMember(id) {
+    const result = await db.pool.query(
+        'SELECT * FROM members WHERE id = $1',
+        [id]
     );
-    return result.rows[0]
+
+    return result.rows[0];
 }
-async function addMember(member){
-    const result=await db.pool.query(
+
+async function addMember(member) {
+    const familyId = member.family_id
+        ? Number(member.family_id)
+        : null;
+
+    const result = await db.pool.query(
         `INSERT INTO members
-        (family_id,first_name,last_name,birth_date,is_resident,passport_code,pass_sport_code,medical_certificate_date)
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
+        (
+            family_id,
+            first_name,
+            last_name,
+            birth_date,
+            is_resident,
+            passport_code,
+            pass_sport_code,
+            medical_certificate_date
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING *`,
         [
-            member.family_id,
+            familyId,
             member.first_name,
             member.last_name,
             member.birth_date,
@@ -26,22 +46,30 @@ async function addMember(member){
             member.pass_sport_code,
             member.medical_certificate_date
         ]
-    )
-    return result.rows[0]
+    );
+    return result.rows[0];
 }
-async function editMember(id,member){
-    const result=await db.pool.query(
-        `UPDATE members SET family_id=$1,
-             first_name=$2,
-             last_name=$3,
-             birth_date=$4,
-             is_resident=$5,
-             pass_sport_code=$6,
-             passport_code=$7,
-             medical_certificate_date=$8
-         WHERE id=$9 RETURNING *`,
+
+async function editMember(id, member) {
+    const familyId = member.family_id
+        ? Number(member.family_id)
+        : null;
+
+    const result = await db.pool.query(
+        `UPDATE members
+        SET
+            family_id = $1,
+            first_name = $2,
+            last_name = $3,
+            birth_date = $4,
+            is_resident = $5,
+            pass_sport_code = $6,
+            passport_code = $7,
+            medical_certificate_date = $8
+        WHERE id = $9
+        RETURNING *`,
         [
-            member.family_id,
+            familyId,
             member.first_name,
             member.last_name,
             member.birth_date,
@@ -53,19 +81,24 @@ async function editMember(id,member){
         ]
     );
 
-    return result.rows[0]
+    return result.rows[0];
 }
-async function removeMember(id){
-    const result=await db.pool.query(
+
+async function removeMember(id) {
+    const result = await db.pool.query(
         `DELETE FROM members
-         WHERE id=$1 RETURNING *`,[id] );
+        WHERE id = $1
+        RETURNING *`,
+        [id]
+    );
 
     return result.rows[0];
 }
-module.exports={
+
+module.exports = {
     getMembers,
     getMember,
     addMember,
     editMember,
     removeMember
-}
+};

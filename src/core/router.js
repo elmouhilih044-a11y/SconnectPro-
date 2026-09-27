@@ -66,6 +66,7 @@ route('PUT', '/waiting-list/:id', waitingListController.editWaiting)
 route('DELETE', '/waiting-list/:id', waitingListController.removeWaiting)
 
 route('GET', '/members', memberController.getMembers)
+route('GET', '/members/new', memberController.newMemberForm);
 route('GET', '/members/:id', memberController.getMember)
 route('POST', '/members', memberController.addMember)
 route('PUT', '/members/:id', memberController.editMember)
