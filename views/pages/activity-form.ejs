@@ -3,8 +3,7 @@
 
 <main class="page-container">
 
-```
-<section class="page-header">
+    <section class="page-header">
     <div>
         <span class="eyebrow">Gestion</span>
 
@@ -222,7 +221,6 @@
     </form>
 
 </section>
-```
 
 </main>
 
@@ -239,7 +237,7 @@
             sport_type: document.getElementById('sport_type').value,
             facility_id: Number(document.getElementById('facility_id').value),
             sub_zone: document.getElementById('sub_zone').value || null,
-            day_of_week: document.getElementById('day_of_week').selectedIndex + 1,
+            day_of_week: document.getElementById('day_of_week').value,
             start_time: document.getElementById('start_time').value,
             end_time: document.getElementById('end_time').value,
             max_capacity: Number(document.getElementById('max_capacity').value),

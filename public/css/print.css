@@ -6,7 +6,8 @@ body {
 .footer,
 .no-print,
 button,
-form {
+form,
+.btn {
     display: none !important
 }
 
