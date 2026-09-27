@@ -36,6 +36,7 @@ router.on('GET', '/', (req, res) => {
 
 
 route('GET', '/facilities', facilityController.getFacilities)
+route('GET', '/facilities/new', facilityController.newFacilityForm)
 route('GET', '/facilities/:id', facilityController.getFacility)
 route('POST', '/facilities', facilityController.addFacility)
 route('PUT', '/facilities/:id', facilityController.editFacility)

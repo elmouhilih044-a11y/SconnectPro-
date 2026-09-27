@@ -107,11 +107,27 @@ async function removeFacility(req,res){
         res.end('Erreur serveur');
     }
 }
+async function newFacilityForm(req, res) {
+    try {
+        render(res, 'pages/facility-form.ejs', {
+            facility: null
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.writeHead(500, {
+            'Content-Type': 'text/plain'
+        });
+
+        res.end('Erreur serveur');
+    }
+}
 
 module.exports= {
     getFacilities,
     getFacility,
     addFacility,
     editFacility,
-    removeFacility
+    removeFacility,
+    newFacilityForm
 };
