@@ -17,6 +17,14 @@ const router= findMyWay({
         res.end('<h1>404 - Page non trouvée</h1>')
     }
 });
+function route(method, path, handler) {
+    router.on(method, path, (req, res, params, store, searchParams) => {
+        req.params = params;
+        req.query = searchParams;
+        handler(req, res);
+    });
+}
+
 router.on('GET', '/public/*', serveStaticFile)
 
 router.on('GET', '/', (req, res) => {
@@ -27,45 +35,46 @@ router.on('GET', '/', (req, res) => {
 });
 
 
-router.on('GET', '/facilities', facilityController.getFacilities)
-router.on('GET', '/facilities/:id', facilityController.getFacility)
-router.on('POST', '/facilities', facilityController.addFacility)
-router.on('PUT', '/facilities/:id', facilityController.editFacility)
-router.on('DELETE', '/facilities/:id', facilityController.removeFacility)
+route('GET', '/facilities', facilityController.getFacilities)
+route('GET', '/facilities/:id', facilityController.getFacility)
+route('POST', '/facilities', facilityController.addFacility)
+route('PUT', '/facilities/:id', facilityController.editFacility)
+route('DELETE', '/facilities/:id', facilityController.removeFacility)
 
-router.on('GET', '/associations', associationController.getAssociations)
-router.on('GET', '/associations/:id', associationController.getAssociation)
-router.on('POST', '/associations', associationController.addAssociation)
-router.on('PUT', '/associations/:id', associationController.editAssociation)
-router.on('DELETE', '/associations/:id', associationController.removeAssociation)
+route('GET', '/associations', associationController.getAssociations)
+route('GET', '/associations/:id', associationController.getAssociation)
+route('POST', '/associations', associationController.addAssociation)
+route('PUT', '/associations/:id', associationController.editAssociation)
+route('DELETE', '/associations/:id', associationController.removeAssociation)
 
-router.on('GET', '/activities', activityController.getActivities)
-router.on('GET', '/activities/:id', activityController.getActivity)
-router.on('POST', '/activities', activityController.addActivity)
-router.on('PUT', '/activities/:id', activityController.editActivity)
-router.on('DELETE', '/activities/:id', activityController.removeActivity)
+route('GET', '/activities', activityController.getActivities)
+route('GET', '/activities/:id', activityController.getActivity)
+route('POST', '/activities', activityController.addActivity)
+route('PUT', '/activities/:id', activityController.editActivity)
+route('DELETE', '/activities/:id', activityController.removeActivity)
 
-router.on('GET', '/registrations', registrationController.getRegistrations)
-router.on('GET', '/registrations/:id', registrationController.getRegistration)
-router.on('POST', '/registrations', registrationController.addRegistration)
-router.on('DELETE', '/registrations/:id', registrationController.removeRegistration)
+route('GET', '/registrations', registrationController.getRegistrations)
+route('GET', '/registrations/new', registrationController.newRegistrationForm) 
+route('GET', '/registrations/:id', registrationController.getRegistration)
+route('POST', '/registrations', registrationController.addRegistration)
+route('DELETE', '/registrations/:id', registrationController.removeRegistration)
 
-router.on('GET', '/waiting-list', waitingListController.getWaitingList)
-router.on('GET', '/waiting-list/:id', waitingListController.getWaiting)
-router.on('POST', '/waiting-list', waitingListController.addWaiting)
-router.on('PUT', '/waiting-list/:id', waitingListController.editWaiting)
-router.on('DELETE', '/waiting-list/:id', waitingListController.removeWaiting)
+route('GET', '/waiting-list', waitingListController.getWaitingList)
+route('GET', '/waiting-list/:id', waitingListController.getWaiting)
+route('POST', '/waiting-list', waitingListController.addWaiting)
+route('PUT', '/waiting-list/:id', waitingListController.editWaiting)
+route('DELETE', '/waiting-list/:id', waitingListController.removeWaiting)
 
-router.on('GET', '/members', memberController.getMembers)
-router.on('GET', '/members/:id', memberController.getMember)
-router.on('POST', '/members', memberController.addMember)
-router.on('PUT', '/members/:id', memberController.editMember)
-router.on('DELETE', '/members/:id', memberController.removeMember)
+route('GET', '/members', memberController.getMembers)
+route('GET', '/members/:id', memberController.getMember)
+route('POST', '/members', memberController.addMember)
+route('PUT', '/members/:id', memberController.editMember)
+route('DELETE', '/members/:id', memberController.removeMember)
 
-router.on('GET', '/families', familyController.getFamilies)
-router.on('GET', '/families/:id', familyController.getFamily)
-router.on('POST', '/families', familyController.addFamily)
-router.on('PUT', '/families/:id', familyController.editFamily)
-router.on('DELETE', '/families/:id', familyController.removeFamily)
+route('GET', '/families', familyController.getFamilies)
+route('GET', '/families/:id', familyController.getFamily)
+route('POST', '/families', familyController.addFamily)
+route('PUT', '/families/:id', familyController.editFamily)
+route('DELETE', '/families/:id', familyController.removeFamily)
 
 module.exports = router;

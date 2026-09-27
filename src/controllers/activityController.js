@@ -1,12 +1,9 @@
 const activityService = require('../services/activityService');
-
+const render = require('../core/renderer');
 async function getActivities(req, res){
     try{
         const activities= await activityService.getActivities()
-        res.writeHead(200,{
-            'Content-Type':'application/json'
-        })
-        res.end(JSON.stringify(activities))
+       render(res, 'pages/activities.ejs', { activities, query: {} });
     }catch(error){
         console.error(error)
         res.writeHead(500,{

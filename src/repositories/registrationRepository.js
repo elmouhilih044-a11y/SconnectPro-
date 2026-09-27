@@ -2,7 +2,11 @@ const db= require('../config/db');
 
 async function getRegistrations(){
     const result= await db.pool.query(
-        'SELECT * FROM registrations ORDER BY id'
+        `SELECT r.*, m.first_name, m.last_name, a.name AS activity_name
+         FROM registrations r
+         JOIN members m ON m.id = r.member_id
+         JOIN activities a ON a.id = r.activity_id
+         ORDER BY r.id`
     );
     return result.rows
 }

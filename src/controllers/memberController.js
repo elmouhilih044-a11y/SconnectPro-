@@ -1,11 +1,9 @@
 const memberService=require('../services/memberService');
+const render = require('../core/renderer');
 async function getMembers(req,res){
     try{
         const members=await memberService.getMembers()
-        res.writeHead(200,{
-            'Content-Type':'application/json'
-        });
-        res.end(JSON.stringify(members))
+        render(res, 'pages/members.ejs', { members });
     }catch(error){
         console.error(error);
         res.writeHead(500,{

@@ -1,12 +1,9 @@
 const facilityService = require('../services/facilityService');
-
+const render = require('../core/renderer');
 async function getFacilities(req, res){
     try {
         const facilities= await facilityService.getFacilities();
-        res.writeHead(200,{
-            'Content-Type':'application/json'
-        })
-        res.end(JSON.stringify(facilities))
+       render(res, 'pages/facilities.ejs', { facilities });
     } catch (error){
         console.error(error);
         res.writeHead(500,{

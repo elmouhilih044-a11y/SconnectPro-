@@ -1,12 +1,9 @@
 const registrationService= require('../services/registrationService');
-
+const render = require('../core/renderer');
 async function getRegistrations(req, res){
     try {
         const registrations= await registrationService.getRegistrations()
-        res.writeHead(200,{
-            'Content-Type':'application/json'
-        });
-        res.end(JSON.stringify(registrations));
+     render(res, 'pages/registrations.ejs', { registrations });
     } catch (error){
         console.error(error)
         res.writeHead(500,{
@@ -86,9 +83,26 @@ async function removeRegistration(req, res){
         res.end('Erreur serveur')
     }
 }
+
+async function newRegistrationForm(req, res){
+    try {
+        const activityId = req.query.activity_id;
+        const memberId = req.query.member_id;
+
+        const activity = activityId ? await activityService.getActivity(activityId) : null;
+        const member = memberId ? await memberService.getMember(memberId) : null;
+
+        render(res, 'pages/checkout.ejs', { activity, member, finalPrice: null });
+    } catch (error){
+        console.error(error)
+        res.writeHead(500, { 'Content-Type': 'text/plain' })
+        res.end('Erreur serveur')
+    }
+}
 module.exports= {
     getRegistrations,
     getRegistration,
     addRegistration,
-    removeRegistration
+    removeRegistration,
+    newRegistrationForm
 };
