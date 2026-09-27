@@ -25,7 +25,10 @@ function checkErpCapacity(facility, activity){
 function checkSchedule(existingActivities, activity){
     for(const existingActivity of existingActivities){
         if (hasTimeConflict(existingActivity, activity)){
-            throw new Error('Cette activité entre en conflit avec une activité existante')
+            throw new Error(
+                'Conflit d\'horaire avec l\'activité "' + existingActivity.name +
+                '" (' + existingActivity.start_time + ' - ' + existingActivity.end_time + ')'
+            )
         }
     }
 }

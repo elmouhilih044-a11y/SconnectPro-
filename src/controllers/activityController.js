@@ -1,6 +1,8 @@
 const activityService = require('../services/activityService');
 const render = require('../core/renderer');
 const facilityService = require('../services/facilityService');
+const waitingListService = require('../services/waitingListService');
+
 async function getActivities(req, res) {
     try {
         const query = {
@@ -37,9 +39,11 @@ async function getActivity(req, res) {
             return res.end('Activité introuvable');
         }
 
+        const waitingList = await waitingListService.getByActivity(activity.id);
+
         render(res, 'pages/activity-detail.ejs', {
             activity,
-            waitingList: []
+            waitingList
         });
 
     } catch (error) {

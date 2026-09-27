@@ -1,4 +1,6 @@
+
 <%- include('../partials/header') %>
+
 <%- include('../partials/navbar') %>
 
 <main class="page-container">
@@ -7,8 +9,12 @@
 
         <div>
             <span class="eyebrow">Adhérents</span>
+
             <h1>Registre des adhérents</h1>
-            <p>Gestion des membres et de leur situation médicale</p>
+
+            <p>
+                Gestion des membres et de leur situation médicale
+            </p>
         </div>
 
         <a href="/members/new" class="btn btn-primary">
@@ -27,9 +33,9 @@
 
                     <tr>
                         <th>Nom</th>
-                        <th>Email</th>
                         <th>Date de naissance</th>
                         <th>Résident</th>
+                        <th>Pass'Sport</th>
                         <th>Certificat médical</th>
                         <th>Action</th>
                     </tr>
@@ -50,36 +56,72 @@
                             </td>
 
                             <td>
-                                <%= member.email || '-' %>
-                            </td>
-
-                            <td>
                                 <%= member.birth_date || '-' %>
                             </td>
 
                             <td>
+
                                 <% if (member.is_resident) { %>
-                                    <span class="status-badge">Oui</span>
+
+                                    <span class="status-badge">
+                                        Oui
+                                    </span>
+
                                 <% } else { %>
-                                    <span class="status-badge status-muted">Non</span>
+
+                                    <span class="status-badge status-muted">
+                                        Non
+                                    </span>
+
                                 <% } %>
+
                             </td>
 
                             <td>
+
+                                <% if (member.pass_sport_code) { %>
+
+                                    <span class="status-badge">
+                                        Oui
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span class="status-badge status-muted">
+                                        Non
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+                            <td>
+
                                 <% if (member.medical_certificate_date) { %>
-                                    <span class="status-badge">Présent</span>
+
+                                    <span class="status-badge">
+                                        Présent
+                                    </span>
+
                                 <% } else { %>
-                                    <span class="status-badge status-danger">Manquant</span>
+
+                                    <span class="status-badge status-danger">
+                                        Manquant
+                                    </span>
+
                                 <% } %>
+
                             </td>
 
                             <td>
+
                                 <a
                                     href="/members/<%= member.id %>"
                                     class="btn btn-small btn-secondary"
                                 >
                                     Voir
                                 </a>
+
                             </td>
 
                         </tr>
@@ -95,8 +137,15 @@
     <% } else { %>
 
         <div class="empty-state">
-            <h3>Aucun adhérent</h3>
-            <p>Le registre ne contient aucun adhérent.</p>
+
+            <h3>
+                Aucun adhérent
+            </h3>
+
+            <p>
+                Le registre ne contient aucun adhérent.
+            </p>
+
         </div>
 
     <% } %>
@@ -104,3 +153,4 @@
 </main>
 
 <%- include('../partials/footer') %>
+

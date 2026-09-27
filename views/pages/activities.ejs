@@ -1,10 +1,14 @@
+
 <%- include('../partials/header') %>
+
 <%- include('../partials/navbar') %>
+
+<% const jours = ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']; %>
 
 <main class="page-container">
 
-    <!-- En-tête de la page -->
     <section class="page-header">
+
         <div>
             <span class="eyebrow">Catalogue sportif</span>
 
@@ -18,17 +22,15 @@
         <a href="/activities/new" class="btn btn-primary">
             Ajouter une activité
         </a>
+
     </section>
 
-
-    <!-- Filtres -->
     <section class="filters">
 
         <form method="GET" action="/activities">
 
             <div class="form-grid">
 
-                <!-- Filtre par sport -->
                 <div class="form-group">
 
                     <label for="sport">
@@ -45,8 +47,6 @@
 
                 </div>
 
-
-                <!-- Filtre par jour -->
                 <div class="form-group">
 
                     <label for="day">
@@ -112,8 +112,6 @@
 
                 </div>
 
-
-                <!-- Bouton filtrer -->
                 <div class="form-group form-action">
 
                     <button
@@ -131,8 +129,6 @@
 
     </section>
 
-
-    <!-- Liste des activités -->
     <% if (activities && activities.length > 0) { %>
 
         <div class="cards-grid">
@@ -141,7 +137,6 @@
 
                 <article class="activity-card">
 
-                    <!-- Partie supérieure de la carte -->
                     <div class="activity-card-top">
 
                         <span class="sport-tag">
@@ -158,35 +153,27 @@
 
                     </div>
 
-
-                    <!-- Nom de l'activité -->
                     <h2>
                         <%= activity.name %>
                     </h2>
 
-
-                    <!-- Informations -->
                     <div class="activity-info">
 
                         <div>
                             <span>Jour</span>
 
                             <strong>
-                                <%= activity.day_of_week %>
+                                <%= jours[activity.day_of_week] || activity.day_of_week %>
                             </strong>
                         </div>
-
 
                         <div>
                             <span>Horaire</span>
 
                             <strong>
-                                <%= activity.start_time %>
-                                -
-                                <%= activity.end_time %>
+                                <%= activity.start_time %> - <%= activity.end_time %>
                             </strong>
                         </div>
-
 
                         <div>
                             <span>Capacité</span>
@@ -195,7 +182,6 @@
                                 <%= activity.max_capacity %>
                             </strong>
                         </div>
-
 
                         <div>
                             <span>Tarif</span>
@@ -207,8 +193,6 @@
 
                     </div>
 
-
-                    <!-- Bouton détail -->
                     <a
                         href="/activities/<%= activity.id %>"
                         class="btn btn-secondary"
@@ -222,8 +206,6 @@
 
         </div>
 
-
-    <!-- Aucune activité -->
     <% } else { %>
 
         <div class="empty-state">
@@ -243,3 +225,4 @@
 </main>
 
 <%- include('../partials/footer') %>
+

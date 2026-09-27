@@ -15,6 +15,9 @@ async function editWaiting(id, data){
 async function removeWaiting(id){
     return waitingListRepository.removeWaiting(id)
 }
+async function getByActivity(activityId){
+    return waitingListRepository.getWaitingWithMembersByActivity(activityId)
+}
 async function getNextCandidate(activityId){
     const candidates=await waitingListRepository.getWaitingByActivity(activityId)
     return candidates[0] || null;
@@ -42,6 +45,7 @@ module.exports= {
     addWaiting,
     editWaiting,
     removeWaiting,
+    getByActivity,
     getNextCandidate,
     promoteNextCandidate,
     expirePromotions

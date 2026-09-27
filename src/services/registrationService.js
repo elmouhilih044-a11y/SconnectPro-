@@ -11,6 +11,55 @@ async function getRegistration(id) {
     return registrationRepository.getRegistration(id);
 }
 
+async function getQuote(memberId, activityId) {
+    const member = await registrationRepository.getMember(memberId);
+
+    if (!member) {
+        throw new Error('Membre introuvable');
+    }
+
+    const activity = await registrationRepository.getActivity(activityId);
+
+    if (!activity) {
+        throw new Error('Activité introuvable');
+    }
+
+    let familyMemberCount = 1;
+    let quotientFamilial = 0;
+
+    if (member.family_id) {
+        const currentCount =
+            await registrationRepository.countFamilyRegistrations(member.family_id);
+
+        familyMemberCount = currentCount + 1;
+
+        const family = await registrationRepository.getFamily(member.family_id);
+
+        if (family) {
+            quotientFamilial = Number(family.quotient_familial || 0);
+        }
+    }
+
+    const hasPassSport = Boolean(member.pass_sport_code);
+
+    const finalPrice = pricingService.calculatePrice(
+        activity.base_price,
+        member.is_resident,
+        familyMemberCount,
+        quotientFamilial,
+        hasPassSport
+    );
+
+    return {
+        member,
+        activity,
+        familyMemberCount,
+        quotientFamilial,
+        hasPassSport,
+        finalPrice
+    };
+}
+
 async function addRegistration(registration) {
 
     if (!registration.member_id) {
@@ -102,6 +151,7 @@ async function removeRegistration(id) {
 module.exports = {
     getRegistrations,
     getRegistration,
+    getQuote,
     addRegistration,
     removeRegistration
 };

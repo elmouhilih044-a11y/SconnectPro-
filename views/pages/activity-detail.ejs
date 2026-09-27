@@ -1,6 +1,8 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
+<% const jours = ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']; %>
+
 <main class="page-container">
 
     <% if (activity) { %>
@@ -36,7 +38,7 @@
 
                     <div class="info-row">
                         <span>Jour</span>
-                        <strong><%= activity.day_of_week %></strong>
+                        <strong><%= jours[activity.day_of_week] || activity.day_of_week %></strong>
                     </div>
 
                     <div class="info-row">

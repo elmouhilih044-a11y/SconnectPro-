@@ -1,6 +1,4 @@
 const registrationService = require('../services/registrationService');
-const activityService = require('../services/activityService');
-const memberService = require('../services/memberService');
 const render = require('../core/renderer');
 
 async function getRegistrations(req, res) {
@@ -62,14 +60,10 @@ async function addRegistration(req, res) {
 
     req.on('end', async () => {
         try {
-            // Formulaire HTML = application/x-www-form-urlencoded
             const registrationData = Object.fromEntries(
                 new URLSearchParams(body)
             );
 
-            console.log('Registration data:', registrationData);
-
-            // Vérification member_id
             if (!registrationData.member_id) {
                 res.writeHead(400, {
                     'Content-Type': 'text/plain; charset=utf-8'
@@ -78,7 +72,6 @@ async function addRegistration(req, res) {
                 return res.end('member_id est obligatoire');
             }
 
-            // Vérification activity_id
             if (!registrationData.activity_id) {
                 res.writeHead(400, {
                     'Content-Type': 'text/plain; charset=utf-8'
@@ -149,7 +142,6 @@ async function newRegistrationForm(req, res) {
         const activityId = req.query.activity_id;
         const memberId = req.query.member_id;
 
-        // Vérifier que les IDs existent dans l'URL
         if (!activityId) {
             res.writeHead(400, {
                 'Content-Type': 'text/plain; charset=utf-8'
@@ -166,47 +158,25 @@ async function newRegistrationForm(req, res) {
             return res.end('member_id est obligatoire');
         }
 
-        // Récupérer activité et membre
-        const activity =
-            await activityService.getActivity(activityId);
+        const quote = await registrationService.getQuote(memberId, activityId);
 
-        const member =
-            await memberService.getMember(memberId);
-
-        // Vérifier que l'activité existe
-        if (!activity) {
-            res.writeHead(404, {
-                'Content-Type': 'text/plain; charset=utf-8'
-            });
-
-            return res.end('Activité introuvable');
-        }
-
-        // Vérifier que le membre existe
-        if (!member) {
-            res.writeHead(404, {
-                'Content-Type': 'text/plain; charset=utf-8'
-            });
-
-            return res.end('Membre introuvable');
-        }
-
-        // Afficher la page checkout
         render(res, 'pages/checkout.ejs', {
-            activity,
-            member,
-            finalPrice: null,
-            familyMemberCount: 1
+            activity: quote.activity,
+            member: quote.member,
+            finalPrice: quote.finalPrice,
+            familyMemberCount: quote.familyMemberCount,
+            quotientFamilial: quote.quotientFamilial,
+            hasPassSport: quote.hasPassSport
         });
 
     } catch (error) {
         console.error(error);
 
-        res.writeHead(500, {
+        res.writeHead(404, {
             'Content-Type': 'text/plain; charset=utf-8'
         });
 
-        res.end('Erreur serveur');
+        res.end(error.message);
     }
 }
 

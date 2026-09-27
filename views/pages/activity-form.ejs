@@ -96,22 +96,22 @@
                 <select id="day_of_week" name="day_of_week" required>
 
                     <% const days = [
-                        'Lundi',
-                        'Mardi',
-                        'Mercredi',
-                        'Jeudi',
-                        'Vendredi',
-                        'Samedi',
-                        'Dimanche'
+                        { value: 1, label: 'Lundi' },
+                        { value: 2, label: 'Mardi' },
+                        { value: 3, label: 'Mercredi' },
+                        { value: 4, label: 'Jeudi' },
+                        { value: 5, label: 'Vendredi' },
+                        { value: 6, label: 'Samedi' },
+                        { value: 7, label: 'Dimanche' }
                     ] %>
 
                     <% days.forEach(function(day) { %>
 
                         <option
-                            value="<%= day %>"
-                            <%= activity && activity.day_of_week == day ? 'selected' : '' %>
+                            value="<%= day.value %>"
+                            <%= activity && activity.day_of_week == day.value ? 'selected' : '' %>
                         >
-                            <%= day %>
+                            <%= day.label %>
                         </option>
 
                     <% }) %>
@@ -237,7 +237,7 @@
             sport_type: document.getElementById('sport_type').value,
             facility_id: Number(document.getElementById('facility_id').value),
             sub_zone: document.getElementById('sub_zone').value || null,
-            day_of_week: document.getElementById('day_of_week').value,
+            day_of_week: Number(document.getElementById('day_of_week').value),
             start_time: document.getElementById('start_time').value,
             end_time: document.getElementById('end_time').value,
             max_capacity: Number(document.getElementById('max_capacity').value),

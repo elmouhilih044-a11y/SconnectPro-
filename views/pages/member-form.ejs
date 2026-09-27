@@ -49,17 +49,6 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Email</label>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="<%= member ? member.email || '' : '' %>"
-                >
-            </div>
-
-            <div class="form-group">
                 <label for="birth_date">Date de naissance</label>
 
                 <input
@@ -86,7 +75,7 @@
                                 value="<%= family.id %>"
                                 <%= member && member.family_id == family.id ? 'selected' : '' %>
                             >
-                                <%= family.name || 'Famille ' + family.id %>
+                                <%= family.reference_name || 'Famille ' + family.id %>
                             </option>
 
                         <% }) %>
@@ -97,17 +86,25 @@
             </div>
 
             <div class="form-group">
-                <label for="quotient_familial">
-                    Quotient familial
-                </label>
+                <label for="passport_code">Code passeport</label>
 
                 <input
-                    type="number"
-                    id="quotient_familial"
-                    name="quotient_familial"
-                    min="0"
-                    step="0.01"
-                    value="<%= member ? member.quotient_familial || '' : '' %>"
+                    type="text"
+                    id="passport_code"
+                    name="passport_code"
+                    value="<%= member ? member.passport_code || '' : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="pass_sport_code">Code Pass'Sport</label>
+
+                <input
+                    type="text"
+                    id="pass_sport_code"
+                    name="pass_sport_code"
+                    placeholder="Optionnel"
+                    value="<%= member ? member.pass_sport_code || '' : '' %>"
                 >
             </div>
 
@@ -173,12 +170,10 @@
         const data = {
             first_name: document.getElementById('first_name').value,
             last_name: document.getElementById('last_name').value,
-            email: document.getElementById('email').value || null,
             birth_date: document.getElementById('birth_date').value,
             family_id: familyValue ? Number(familyValue) : null,
-            quotient_familial: document.getElementById('quotient_familial').value
-                ? Number(document.getElementById('quotient_familial').value)
-                : null,
+            passport_code: document.getElementById('passport_code').value || null,
+            pass_sport_code: document.getElementById('pass_sport_code').value || null,
             medical_certificate_date:
                 document.getElementById('medical_certificate_date').value || null,
             is_resident: document.getElementById('is_resident').checked

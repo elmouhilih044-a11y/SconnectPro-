@@ -63,6 +63,20 @@ async function getWaitingByActivity(activityId) {
     )
     return result.rows
 }
+
+async function getWaitingWithMembersByActivity(activityId) {
+    const result = await db.pool.query(
+        `SELECT w.*, m.first_name, m.last_name
+         FROM waiting_list w
+         JOIN members m ON m.id = w.member_id
+         WHERE w.activity_id = $1
+         AND w.status = 'waiting'
+         ORDER BY w.priority_score DESC, w.created_at ASC`,
+        [activityId]
+    )
+    return result.rows
+}
+
 async function updateWaitingStatus(id, status, deadlineConfirmation= null) {
     const result= await db.pool.query(
         `UPDATE waiting_list
@@ -84,8 +98,6 @@ async function expirePromotions(){
     return result.rows;
 }
 
-
-
 module.exports={
     getWaitingList,
     getWaiting,
@@ -93,8 +105,7 @@ module.exports={
     editWaiting,
     removeWaiting,
     getWaitingByActivity,
+    getWaitingWithMembersByActivity,
     updateWaitingStatus,
     expirePromotions
-
-
 }

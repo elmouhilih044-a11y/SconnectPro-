@@ -117,6 +117,7 @@
                                     id="is_resident"
                                     name="is_resident"
                                     <%= member.is_resident ? 'checked' : '' %>
+                                    disabled
                                 >
 
                                 Résident
@@ -137,6 +138,7 @@
                                 name="family_member_count"
                                 min="1"
                                 value="<%= familyMemberCount || 1 %>"
+                                disabled
                             >
 
                         </div>
@@ -153,7 +155,8 @@
                                 id="quotient_familial"
                                 name="quotient_familial"
                                 min="0"
-                                value="<%= member.quotient_familial || 0 %>"
+                                value="<%= quotientFamilial || 0 %>"
+                                disabled
                             >
 
                         </div>
@@ -167,6 +170,8 @@
                                     type="checkbox"
                                     id="has_pass_sport"
                                     name="has_pass_sport"
+                                    <%= hasPassSport ? 'checked' : '' %>
+                                    disabled
                                 >
 
                                 Pass'Sport
@@ -218,7 +223,5 @@
     </div>
 
 </main>
-
-<script src="/public/js/dynamic-pricing.js"></script>
 
 <%- include('../partials/footer') %>

@@ -1,6 +1,8 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
+<% const jours = ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']; %>
+
 <main class="page-container">
 
     <section class="hero">
@@ -73,7 +75,7 @@
 
                             <td><%= activity.sport_type %></td>
 
-                            <td><%= activity.day_of_week %></td>
+                            <td><%= jours[activity.day_of_week] || activity.day_of_week %></td>
 
                             <td>
                                 <%= activity.start_time %> -
