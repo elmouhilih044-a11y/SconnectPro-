@@ -7,7 +7,7 @@ async function getFacilities(req, res){
     } catch (error){
         console.error(error);
         res.writeHead(500,{
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         })
         res.end('Erreur serveur');
     }
@@ -23,7 +23,7 @@ async function getFacility(req, res) {
         if (!facility) {
 
             res.writeHead(404, {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             });
 
             return res.end(
@@ -46,7 +46,7 @@ async function getFacility(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
@@ -68,7 +68,7 @@ async function addFacility(req,res){
         } catch (error) {
             console.error(error)
             res.writeHead(500, {
-                'Content-Type':'text/plain'
+                'Content-Type':'text/plain; charset=utf-8'
             })
             res.end('Erreur serveur');
         }
@@ -86,7 +86,7 @@ async function editFacility(req, res){
                 req.params.id,facilityData);
             if (!facility){
                 res.writeHead(404,{
-                    'Content-Type':'text/plain'
+                    'Content-Type':'text/plain; charset=utf-8'
                 });
                 return res.end('Facility introuvable');
             }
@@ -97,7 +97,7 @@ async function editFacility(req, res){
         } catch (error){
             console.error(error)
             res.writeHead(500,{
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain; charset=utf-8'
             })
             res.end('Erreur serveur')
         }
@@ -109,7 +109,7 @@ async function removeFacility(req,res){
         const facility= await facilityService.removeFacility(req.params.id)
         if (!facility){
             res.writeHead(404,{
-                'Content-Type':'text/plain'
+                'Content-Type':'text/plain; charset=utf-8'
             })
             return res.end('Facility introuvable');
         }
@@ -120,7 +120,7 @@ async function removeFacility(req,res){
     } catch (error){
         console.error(error)
         res.writeHead(500,{
-            'Content-Type':'text/plain'
+            'Content-Type':'text/plain; charset=utf-8'
         });
         res.end('Erreur serveur');
     }
@@ -134,7 +134,39 @@ async function newFacilityForm(req, res) {
         console.error(error);
 
         res.writeHead(500, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain; charset=utf-8'
+        });
+
+        res.end('Erreur serveur');
+    }
+}
+
+async function editFacilityForm(req, res) {
+    try {
+
+        const facility =
+            await facilityService.getFacility(req.params.id);
+
+        if (!facility) {
+
+            res.writeHead(404, {
+                'Content-Type': 'text/plain; charset=utf-8'
+            });
+
+            return res.end(
+                'Installation introuvable'
+            );
+        }
+
+        render(res, 'pages/facility-form.ejs', {
+            facility
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.writeHead(500, {
+            'Content-Type': 'text/plain; charset=utf-8'
         });
 
         res.end('Erreur serveur');
@@ -147,5 +179,6 @@ module.exports= {
     addFacility,
     editFacility,
     removeFacility,
-    newFacilityForm
+    newFacilityForm,
+    editFacilityForm
 };

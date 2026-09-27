@@ -13,7 +13,7 @@ const dashboardController = require('../controllers/dashboardController');
 const router= findMyWay({
     defaultRoute: (req, res) => {
         res.writeHead(404, {
-            'Content-Type': 'text/html'
+            'Content-Type': 'text/html; charset=utf-8'
         });
         res.end('<h1>404 - Page non trouvée</h1>')
     }
@@ -40,6 +40,7 @@ route('GET', '/', dashboardController.getDashboard);
 
 route('GET', '/facilities', facilityController.getFacilities)
 route('GET', '/facilities/new', facilityController.newFacilityForm)
+route('GET', '/facilities/:id/edit', facilityController.editFacilityForm)
 route('GET', '/facilities/:id', facilityController.getFacility)
 route('POST', '/facilities', facilityController.addFacility)
 route('PUT', '/facilities/:id', facilityController.editFacility)
