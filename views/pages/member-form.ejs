@@ -3,163 +3,220 @@
 
 <main class="page-container">
 
-    <section class="page-header">
+```
+<section class="page-header">
+    <div>
+        <span class="eyebrow">Adhérent</span>
 
-        <div>
-            <span class="eyebrow">Adhérent</span>
+        <h1>
+            <%= member ? 'Modifier l adhérent' : 'Nouvel adhérent' %>
+        </h1>
 
-            <h1>
-                <%= member ? 'Modifier l adhérent' : 'Nouvel adhérent' %>
-            </h1>
+        <p>Informations personnelles et administratives</p>
+    </div>
+</section>
 
-            <p>Informations personnelles et administratives</p>
-        </div>
+<section class="form-card">
 
-    </section>
+    <form
+        id="memberForm"
+        action="<%= member ? '/members/' + member.id : '/members' %>"
+    >
 
-    <section class="form-card">
+        <div class="form-grid">
 
-        <form
-            method="POST"
-            action="<%= member ? '/members/' + member.id : '/members' %>"
-        >
+            <div class="form-group">
+                <label for="first_name">Prénom</label>
 
-            <div class="form-grid">
-
-                <div class="form-group">
-                    <label for="first_name">Prénom</label>
-
-                    <input
-                        type="text"
-                        id="first_name"
-                        name="first_name"
-                        required
-                        value="<%= member ? member.first_name : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="last_name">Nom</label>
-
-                    <input
-                        type="text"
-                        id="last_name"
-                        name="last_name"
-                        required
-                        value="<%= member ? member.last_name : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value="<%= member ? member.email || '' : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="birth_date">Date de naissance</label>
-
-                    <input
-                        type="date"
-                        id="birth_date"
-                        name="birth_date"
-                        required
-                        value="<%= member ? member.birth_date : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="family_id">Famille</label>
-
-                    <select id="family_id" name="family_id">
-
-                        <option value="">Aucune famille</option>
-
-                        <% if (families) { %>
-
-                            <% families.forEach(function(family) { %>
-
-                                <option
-                                    value="<%= family.id %>"
-                                    <%= member && member.family_id == family.id ? 'selected' : '' %>
-                                >
-                                    <%= family.name || 'Famille ' + family.id %>
-                                </option>
-
-                            <% }) %>
-
-                        <% } %>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="quotient_familial">
-                        Quotient familial
-                    </label>
-
-                    <input
-                        type="number"
-                        id="quotient_familial"
-                        name="quotient_familial"
-                        min="0"
-                        step="0.01"
-                        value="<%= member ? member.quotient_familial || '' : '' %>"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="medical_certificate_date">
-                        Certificat médical
-                    </label>
-
-                    <input
-                        type="date"
-                        id="medical_certificate_date"
-                        name="medical_certificate_date"
-                        value="<%= member ? member.medical_certificate_date || '' : '' %>"
-                    >
-                </div>
-
+                <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    required
+                    value="<%= member ? member.first_name : '' %>"
+                >
             </div>
 
-            <div class="form-checkboxes">
+            <div class="form-group">
+                <label for="last_name">Nom</label>
 
-                <label>
-                    <input
-                        type="checkbox"
-                        name="is_resident"
-                        value="true"
-                        <%= member && member.is_resident ? 'checked' : '' %>
-                    >
-                    Résident de la commune
+                <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    required
+                    value="<%= member ? member.last_name : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="<%= member ? member.email || '' : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="birth_date">Date de naissance</label>
+
+                <input
+                    type="date"
+                    id="birth_date"
+                    name="birth_date"
+                    required
+                    value="<%= member ? member.birth_date : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="family_id">Famille</label>
+
+                <select id="family_id" name="family_id">
+
+                    <option value="">Aucune famille</option>
+
+                    <% if (families) { %>
+
+                        <% families.forEach(function(family) { %>
+
+                            <option
+                                value="<%= family.id %>"
+                                <%= member && member.family_id == family.id ? 'selected' : '' %>
+                            >
+                                <%= family.name || 'Famille ' + family.id %>
+                            </option>
+
+                        <% }) %>
+
+                    <% } %>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="quotient_familial">
+                    Quotient familial
                 </label>
 
+                <input
+                    type="number"
+                    id="quotient_familial"
+                    name="quotient_familial"
+                    min="0"
+                    step="0.01"
+                    value="<%= member ? member.quotient_familial || '' : '' %>"
+                >
             </div>
 
-            <div class="form-actions">
+            <div class="form-group">
+                <label for="medical_certificate_date">
+                    Certificat médical
+                </label>
 
-                <a href="/members" class="btn btn-secondary">
-                    Annuler
-                </a>
-
-                <button type="submit" class="btn btn-primary">
-                    <%= member ? 'Enregistrer' : 'Créer l adhérent' %>
-                </button>
-
+                <input
+                    type="date"
+                    id="medical_certificate_date"
+                    name="medical_certificate_date"
+                    value="<%= member ? member.medical_certificate_date || '' : '' %>"
+                >
             </div>
 
-        </form>
+        </div>
 
-    </section>
+        <div class="form-checkboxes">
+
+            <label>
+                <input
+                    type="checkbox"
+                    id="is_resident"
+                    name="is_resident"
+                    value="true"
+                    <%= member && member.is_resident ? 'checked' : '' %>
+                >
+
+                Résident de la commune
+            </label>
+
+        </div>
+
+        <div class="form-actions">
+
+            <a href="/members" class="btn btn-secondary">
+                Annuler
+            </a>
+
+            <button type="submit" class="btn btn-primary">
+                <%= member ? 'Enregistrer' : 'Créer l adhérent' %>
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+```
 
 </main>
+
+<script>
+
+    const form = document.getElementById('memberForm');
+
+    form.addEventListener('submit', async function(event) {
+
+        event.preventDefault();
+
+        const familyValue = document.getElementById('family_id').value;
+
+        const data = {
+            first_name: document.getElementById('first_name').value,
+            last_name: document.getElementById('last_name').value,
+            email: document.getElementById('email').value || null,
+            birth_date: document.getElementById('birth_date').value,
+            family_id: familyValue ? Number(familyValue) : null,
+            quotient_familial: document.getElementById('quotient_familial').value
+                ? Number(document.getElementById('quotient_familial').value)
+                : null,
+            medical_certificate_date:
+                document.getElementById('medical_certificate_date').value || null,
+            is_resident: document.getElementById('is_resident').checked
+        };
+
+        try {
+
+            const response = await fetch(form.action, {
+
+                method: '<%= member ? "PUT" : "POST" %>',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify(data)
+
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de l\'enregistrement');
+            }
+
+            window.location.href = '/members';
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert('Erreur lors de l\'enregistrement de l\'adhérent');
+
+        }
+
+    });
+
+</script>
 
 <script src="/public/js/client-validation.js"></script>
 
