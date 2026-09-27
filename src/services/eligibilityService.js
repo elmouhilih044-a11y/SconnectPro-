@@ -1,10 +1,11 @@
 function calculateAge(birthDate){
-    const today= new Date()
+  
+    const referenceDate = new Date(new Date().getFullYear(), 11, 31);
     const birth= new Date(birthDate)
-    let age= today.getFullYear() - birth.getFullYear();
-    const month= today.getMonth() - birth.getMonth();
+    let age= referenceDate.getFullYear() - birth.getFullYear();
+    const month= referenceDate.getMonth() - birth.getMonth();
 
-    if (month < 0 || (month === 0 && today.getDate() < birth.getDate())){
+    if (month < 0 || (month === 0 && referenceDate.getDate() < birth.getDate())){
         age--
     }
     return age
