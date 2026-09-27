@@ -1,8 +1,8 @@
 const activityRepository= require('../repositories/activityRepository');
 const scheduleService = require('./scheduleService');
 
-async function getActivities(){
-    return activityRepository.getActivities()
+async function getActivities(query = {}) {
+    return activityRepository.getActivities(query);
 }
 async function getActivity(id){
     return activityRepository.getActivity(id)

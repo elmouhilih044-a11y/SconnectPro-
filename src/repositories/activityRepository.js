@@ -1,10 +1,49 @@
 const db= require('../config/db');
 
-async function getActivities(){
-    const result= await db.pool.query(
-        'SELECT * FROM activities ORDER BY id'
-    )
-    return result.rows
+async function getActivities(query = {}) {
+
+    let sql = 'SELECT * FROM activities';
+
+    const values = [];
+    const conditions = [];
+
+
+    if (query.sport) {
+        values.push(`%${query.sport}%`);
+        conditions.push(`sport_type ILIKE $${values.length}`);
+    }
+
+   
+    if (query.day) {
+
+        const days = {
+            Lundi: 1,
+            Mardi: 2,
+            Mercredi: 3,
+            Jeudi: 4,
+            Vendredi: 5,
+            Samedi: 6,
+            Dimanche: 7
+        };
+
+        const dayNumber = days[query.day];
+
+        if (dayNumber) {
+            values.push(dayNumber);
+            conditions.push(`day_of_week = $${values.length}`);
+        }
+    }
+
+    
+    if (conditions.length > 0) {
+        sql += ' WHERE ' + conditions.join(' AND ');
+    }
+
+    sql += ' ORDER BY id';
+
+    const result = await db.pool.query(sql, values);
+
+    return result.rows;
 }
 async function getActivity(id){
     const result= await db.pool.query(

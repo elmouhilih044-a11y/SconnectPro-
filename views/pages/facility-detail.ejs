@@ -1,0 +1,148 @@
+<%- include('../partials/header') %>
+
+<%- include('../partials/navbar') %>
+
+<main class="page-container">
+
+    <section class="page-header">
+
+        <div>
+
+            <span class="eyebrow">Infrastructure</span>
+
+            <h1>Détail de l'installation</h1>
+
+            <p>
+                Informations de l'installation sportive
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <% if (facility) { %>
+
+        <section class="detail-grid">
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h2>
+                        <%= facility.name %>
+                    </h2>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <div class="info-row">
+
+                        <span>Nom</span>
+
+                        <strong>
+                            <%= facility.name %>
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Type</span>
+
+                        <strong>
+                            <%= facility.type %>
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Jauge ERP</span>
+
+                        <strong>
+                            <%= facility.erp_capacity %>
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Installation divisible</span>
+
+                        <strong>
+
+                            <%= facility.is_divisible
+                                ? 'Oui'
+                                : 'Non'
+                            %>
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Date de création</span>
+
+                        <strong>
+                            <%= facility.created_at %>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a
+                    href="/facilities"
+                    class="btn btn-secondary"
+                >
+                    Retour
+                </a>
+
+                <a
+                    href="/facilities/<%= facility.id %>/edit"
+                    class="btn btn-primary"
+                >
+                    Modifier
+                </a>
+
+            </div>
+
+        </section>
+
+    <% } else { %>
+
+        <div class="empty-state">
+
+            <h3>Installation introuvable</h3>
+
+            <p>
+                Cette installation n'existe pas.
+            </p>
+
+            <a
+                href="/facilities"
+                class="btn btn-secondary"
+            >
+                Retour aux installations
+            </a>
+
+        </div>
+
+    <% } %>
+
+</main>
+
+<%- include('../partials/footer') %>

@@ -20,8 +20,15 @@ const router= findMyWay({
 });
 function route(method, path, handler) {
     router.on(method, path, (req, res, params, store, searchParams) => {
+
         req.params = params;
-        req.query = searchParams;
+
+        if (searchParams instanceof URLSearchParams) {
+            req.query = Object.fromEntries(searchParams.entries());
+        } else {
+            req.query = searchParams || {};
+        }
+
         handler(req, res);
     });
 }

@@ -12,28 +12,46 @@ async function getFacilities(req, res){
         res.end('Erreur serveur');
     }
 }
-async function getFacility(req, res){
+async function getFacility(req, res) {
+
     try {
-        const facility= await facilityService.getFacility(req.params.id);
-        if (!facility){
-            res.writeHead(404,{
+
+        const facility =
+            await facilityService.getFacility(req.params.id);
+
+
+        if (!facility) {
+
+            res.writeHead(404, {
                 'Content-Type': 'text/plain'
-            })
-            return res.end('Facility introuvable');
+            });
+
+            return res.end(
+                'Installation introuvable'
+            );
         }
-        res.writeHead(200,{
-            'Content-Type': 'application/json'
-        })
-        res.end(JSON.stringify(facility));
+
+
+        render(
+            res,
+            'pages/facility-detail.ejs',
+            {
+                facility
+            }
+        );
+
+
     } catch (error) {
-        console.error(error)
-        res.writeHead(500,{
+
+        console.error(error);
+
+        res.writeHead(500, {
             'Content-Type': 'text/plain'
         });
+
         res.end('Erreur serveur');
     }
 }
-
 async function addFacility(req,res){
     let body= ''
     req.on('data',(part) => {

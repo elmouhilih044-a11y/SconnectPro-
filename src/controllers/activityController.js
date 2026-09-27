@@ -1,16 +1,28 @@
 const activityService = require('../services/activityService');
 const render = require('../core/renderer');
 const facilityService = require('../services/facilityService');
-async function getActivities(req, res){
-    try{
-        const activities= await activityService.getActivities()
-       render(res, 'pages/activities.ejs', { activities, query: {} });
-    }catch(error){
-        console.error(error)
-        res.writeHead(500,{
-            'Content-Type':'text/plain'
+async function getActivities(req, res) {
+    try {
+        const query = {
+            sport: req.query.sport || '',
+            day: req.query.day || ''
+        };
+
+        const activities = await activityService.getActivities(query);
+
+        render(res, 'pages/activities.ejs', {
+            activities,
+            query
         });
-        res.end('Erreur serveur')
+
+    } catch (error) {
+        console.error(error);
+
+        res.writeHead(500, {
+            'Content-Type': 'text/plain'
+        });
+
+        res.end('Erreur serveur');
     }
 }
 async function getActivity(req, res) {

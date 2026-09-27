@@ -3,11 +3,16 @@
 
 <main class="page-container">
 
+    <!-- En-tête de la page -->
     <section class="page-header">
         <div>
             <span class="eyebrow">Catalogue sportif</span>
+
             <h1>Activités</h1>
-            <p>Découvrez les activités sportives disponibles</p>
+
+            <p>
+                Découvrez les activités sportives disponibles
+            </p>
         </div>
 
         <a href="/activities/new" class="btn btn-primary">
@@ -15,14 +20,20 @@
         </a>
     </section>
 
+
+    <!-- Filtres -->
     <section class="filters">
 
         <form method="GET" action="/activities">
 
             <div class="form-grid">
 
+                <!-- Filtre par sport -->
                 <div class="form-group">
-                    <label for="sport">Sport</label>
+
+                    <label for="sport">
+                        Sport
+                    </label>
 
                     <input
                         type="text"
@@ -31,27 +42,87 @@
                         placeholder="Ex : Football"
                         value="<%= query && query.sport ? query.sport : '' %>"
                     >
+
                 </div>
 
+
+                <!-- Filtre par jour -->
                 <div class="form-group">
-                    <label for="day">Jour</label>
+
+                    <label for="day">
+                        Jour
+                    </label>
 
                     <select id="day" name="day">
-                        <option value="">Tous les jours</option>
-                        <option value="Lundi">Lundi</option>
-                        <option value="Mardi">Mardi</option>
-                        <option value="Mercredi">Mercredi</option>
-                        <option value="Jeudi">Jeudi</option>
-                        <option value="Vendredi">Vendredi</option>
-                        <option value="Samedi">Samedi</option>
-                        <option value="Dimanche">Dimanche</option>
+
+                        <option value="">
+                            Tous les jours
+                        </option>
+
+                        <option
+                            value="Lundi"
+                            <%= query && query.day === 'Lundi' ? 'selected' : '' %>
+                        >
+                            Lundi
+                        </option>
+
+                        <option
+                            value="Mardi"
+                            <%= query && query.day === 'Mardi' ? 'selected' : '' %>
+                        >
+                            Mardi
+                        </option>
+
+                        <option
+                            value="Mercredi"
+                            <%= query && query.day === 'Mercredi' ? 'selected' : '' %>
+                        >
+                            Mercredi
+                        </option>
+
+                        <option
+                            value="Jeudi"
+                            <%= query && query.day === 'Jeudi' ? 'selected' : '' %>
+                        >
+                            Jeudi
+                        </option>
+
+                        <option
+                            value="Vendredi"
+                            <%= query && query.day === 'Vendredi' ? 'selected' : '' %>
+                        >
+                            Vendredi
+                        </option>
+
+                        <option
+                            value="Samedi"
+                            <%= query && query.day === 'Samedi' ? 'selected' : '' %>
+                        >
+                            Samedi
+                        </option>
+
+                        <option
+                            value="Dimanche"
+                            <%= query && query.day === 'Dimanche' ? 'selected' : '' %>
+                        >
+                            Dimanche
+                        </option>
+
                     </select>
+
                 </div>
 
+
+                <!-- Bouton filtrer -->
                 <div class="form-group form-action">
-                    <button type="submit" class="btn btn-primary">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
                         Filtrer
                     </button>
+
                 </div>
 
             </div>
@@ -60,6 +131,8 @@
 
     </section>
 
+
+    <!-- Liste des activités -->
     <% if (activities && activities.length > 0) { %>
 
         <div class="cards-grid">
@@ -68,48 +141,78 @@
 
                 <article class="activity-card">
 
+                    <!-- Partie supérieure de la carte -->
                     <div class="activity-card-top">
+
                         <span class="sport-tag">
                             <%= activity.sport_type %>
                         </span>
 
                         <% if (activity.is_all_public) { %>
+
                             <span class="status-badge">
                                 Tout public
                             </span>
+
                         <% } %>
+
                     </div>
 
-                    <h2><%= activity.name %></h2>
 
+                    <!-- Nom de l'activité -->
+                    <h2>
+                        <%= activity.name %>
+                    </h2>
+
+
+                    <!-- Informations -->
                     <div class="activity-info">
 
                         <div>
                             <span>Jour</span>
-                            <strong><%= activity.day_of_week %></strong>
+
+                            <strong>
+                                <%= activity.day_of_week %>
+                            </strong>
                         </div>
+
 
                         <div>
                             <span>Horaire</span>
+
                             <strong>
-                                <%= activity.start_time %> -
+                                <%= activity.start_time %>
+                                -
                                 <%= activity.end_time %>
                             </strong>
                         </div>
 
+
                         <div>
                             <span>Capacité</span>
-                            <strong><%= activity.max_capacity %></strong>
+
+                            <strong>
+                                <%= activity.max_capacity %>
+                            </strong>
                         </div>
+
 
                         <div>
                             <span>Tarif</span>
-                            <strong><%= activity.base_price %> MAD</strong>
+
+                            <strong>
+                                <%= activity.base_price %> MAD
+                            </strong>
                         </div>
 
                     </div>
 
-                    <a href="/activities/<%= activity.id %>" class="btn btn-secondary">
+
+                    <!-- Bouton détail -->
+                    <a
+                        href="/activities/<%= activity.id %>"
+                        class="btn btn-secondary"
+                    >
                         Voir le détail
                     </a>
 
@@ -119,11 +222,20 @@
 
         </div>
 
+
+    <!-- Aucune activité -->
     <% } else { %>
 
         <div class="empty-state">
-            <h3>Aucune activité trouvée</h3>
-            <p>Essayez de modifier vos critères de recherche.</p>
+
+            <h3>
+                Aucune activité trouvée
+            </h3>
+
+            <p>
+                Essayez de modifier vos critères de recherche.
+            </p>
+
         </div>
 
     <% } %>
