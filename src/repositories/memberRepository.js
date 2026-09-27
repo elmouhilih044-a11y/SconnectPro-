@@ -74,8 +74,8 @@ async function editMember(id, member) {
             member.last_name,
             member.birth_date,
             member.is_resident,
-            member.passport_code,
             member.pass_sport_code,
+            member.passport_code,
             member.medical_certificate_date,
             id
         ]
