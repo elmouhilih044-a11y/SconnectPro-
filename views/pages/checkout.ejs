@@ -71,7 +71,7 @@
                     <span>Prix final</span>
 
                     <strong id="price_result">
-                        <%= finalPrice ? finalPrice : activity.base_price %> MAD
+                        <%= finalPrice || (activity ? activity.base_price : 0) %> MAD
                     </strong>
 
                 </div>

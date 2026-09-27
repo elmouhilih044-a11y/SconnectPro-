@@ -1,4 +1,6 @@
 const registrationService= require('../services/registrationService');
+const activityService = require('../services/activityService');
+const memberService = require('../services/memberService');
 const render = require('../core/renderer');
 async function getRegistrations(req, res){
     try {
@@ -92,7 +94,12 @@ async function newRegistrationForm(req, res){
         const activity = activityId ? await activityService.getActivity(activityId) : null;
         const member = memberId ? await memberService.getMember(memberId) : null;
 
-        render(res, 'pages/checkout.ejs', { activity, member, finalPrice: null });
+        render(res, 'pages/checkout.ejs', {
+            activity,
+            member,
+            finalPrice:null,
+            familyMemberCount: 1
+        });
     } catch (error){
         console.error(error)
         res.writeHead(500, { 'Content-Type': 'text/plain' })
